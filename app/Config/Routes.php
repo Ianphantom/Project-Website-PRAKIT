@@ -34,6 +34,7 @@ $routes->setAutoRoute(true);
 $routes->get('/', 'Home::index');
 $routes->get('student/login', 'StudentCtl::login');
 $routes->get('student/register', 'StudentCtl::register');
+$routes->get('student/home', 'StudentCtl::index', ['filter' => 'authStudent']);
 
 /*
  * --------------------------------------------------------------------

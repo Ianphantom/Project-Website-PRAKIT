@@ -24,23 +24,33 @@
                 <a href="../student/index.html"><img src="../assets/images/logo/logo.png" alt="Logo"></a>
             </div>
             <h2 class="auth-title" style="color: whitesmoke;">Log In as Student</h2>
+            <?php if(!empty(session()->getFlashdata('success'))){?>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Success! </strong><?php echo htmlentities(session()->getFlashdata('success')); ?>
+                </div>
+            <?php } ?>
+            <?php if(!empty(session()->getFlashdata('fail'))){?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Sorry! </strong><?php echo htmlentities(session()->getFlashdata('fail')); ?>
+                </div>
+            <?php } ?>
             <p class="auth-subtitle mb-3">Log in with your data that you entered during registration.</p>
 
-            <form action="index.html">
+            <form action="<?php echo base_url() ?>/studentctl/loggingaccount" method="post">
                 <div class="form-group position-relative has-icon-left mb-4">
-                    <input type="text" class="form-control form-control-xl" placeholder="NamaLengkap" required>
+                    <input type="text" class="form-control form-control-xl" name="email" placeholder="Email" required>
+                    <div class="form-control-icon">
+                        <i class="bi bi-envelope"></i>
+                    </div>
+                </div>
+                <div class="form-group position-relative has-icon-left mb-4">
+                    <input type="text" class="form-control form-control-xl" name="nrp" placeholder="NRP" required>
                     <div class="form-control-icon">
                         <i class="bi bi-person"></i>
                     </div>
                 </div>
                 <div class="form-group position-relative has-icon-left mb-4">
-                    <input type="text" class="form-control form-control-xl" placeholder="NRP" required>
-                    <div class="form-control-icon">
-                        <i class="bi bi-person"></i>
-                    </div>
-                </div>
-                <div class="form-group position-relative has-icon-left mb-4">
-                    <input type="password" class="form-control form-control-xl" placeholder="Password" required>
+                    <input type="password" class="form-control form-control-xl" name="password" placeholder="Password" required>
                     <div class="form-control-icon">
                         <i class="bi bi-shield-lock"></i>
                     </div>

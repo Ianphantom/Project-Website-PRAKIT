@@ -22,6 +22,13 @@
                 <a href="../student/index.html"><img src="<?php echo base_url(); ?>/assets/images/logo/logo.png" alt="Logo"></a>
             </div>
             <h1 class="auth-title" style="color: whitesmoke;" >Sign Up as Student</h1>
+            <?php if($error != ""){ ?>
+                    <?php foreach($error as $err){ ?>
+                        <div class="alert alert-danger text-center" role="alert">
+                            <?php echo htmlentities($err); ?>
+                        </div>
+                    <?php } ?>
+            <?php } ?>
             <p class="auth-subtitle mb-5">Input your data to register to our website.</p>
 
             <form action="<?php echo base_url() ?>/studentctl/registeringaccount" method="post">
@@ -50,7 +57,7 @@
                     </div>
                 </div>
                 <div class="form-group position-relative has-icon-left mb-4">
-                    <input type="password" class="form-control form-control-xl" name="confPassword placeholder="Confirm Password" required>
+                    <input type="password" class="form-control form-control-xl" name="confPassword" placeholder="Confirm Password" required>
                     <div class="form-control-icon">
                         <i class="bi bi-shield-lock"></i>
                     </div>
