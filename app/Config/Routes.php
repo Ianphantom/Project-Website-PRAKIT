@@ -36,6 +36,12 @@ $routes->get('student/login', 'StudentCtl::login');
 $routes->get('student/register', 'StudentCtl::register');
 $routes->get('student/home', 'StudentCtl::index', ['filter' => 'authStudent']);
 
+$routes->get('lecture/login', 'LectureCtl::login');
+$routes->get('lecture/register', 'LectureCtl::register');
+$routes->get('lecture/home', 'LectureCtl::index', ['filter' => 'authLecture']);
+
+
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

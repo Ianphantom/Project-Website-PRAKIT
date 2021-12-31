@@ -20,6 +20,7 @@ class Filters extends BaseConfig
         'toolbar'  => DebugToolbar::class,
         'honeypot' => Honeypot::class,
         'authStudent'  => \App\Filters\AuthStudent::class,
+        'authLecture'  => \App\Filters\AuthLecture::class,
     ];
 
     /**
