@@ -12,7 +12,33 @@ class StudentCtl extends BaseController
 {
     public function index()
     {
-        return view('student/index');
+        $pengajuanModel = new PengajuanModel();
+        $studentModel = new StudentModel();
+
+        $data_kp = $pengajuanModel->getPengajuanKP(session()->get('loggedUser'));
+        if($data_kp == 0){
+            $partnerModel = new KppartnerModel();
+            $data_partner = $partnerModel->getPengajuanKP(session()->get('loggedUser'));
+            if($data_partner == 0){
+                return view('student/index_null');
+            }
+            $dataSiswaKP = $partnerModel->where('id_siswa', session()->get('loggedUser'))->first();
+        }else{
+            $dataSiswaKP = $pengajuanModel->where('id_siswa', session()->get('loggedUser'))->first();
+        }
+        $siswaKp = $studentModel->getNamaSiswa(session()->get('loggedUser'));
+        $whoAmI = $studentModel->where('id_siswa', session()->get('loggedUser'))->first();
+        $lectureModel = new LectureModel();
+        $dosenPembimbing = $lectureModel->where('id_dosen', $dataSiswaKP['id_dosen'])->first();
+        
+
+        $data = [
+            'user' => $dataSiswaKP,
+            'dosen' => $dosenPembimbing,
+            'siswaKp' => $siswaKp,
+            'whoAmI' => $whoAmI,
+        ]; 
+        return view('student/index', $data);
     }
 
     public function formPengajuan(){
@@ -145,7 +171,8 @@ class StudentCtl extends BaseController
 
         $name2 = $this->request->getVar('nama2');
         $sks2 = $this->request->getVar('sks2');
-        if($name2 != '-' || $sks2 != '-' ){
+
+        if($name2 != null || $sks2 != null || $name2 != ''){
             $rules1 = [
                 'sks2' => 'required|numeric', // tambah maksimal
                 'alamat2' => 'required|min_length[3]',
@@ -153,7 +180,7 @@ class StudentCtl extends BaseController
                 'doswal2' =>  'required',
             ];
 
-            if(!$this-> validate($rules)){
+            if(!$this-> validate($rules1)){
                 $error = $this->validator->getErrors();
                 $data = [
                     'lectures' => $allLecture,
@@ -184,12 +211,13 @@ class StudentCtl extends BaseController
         $pengajuanModel->insert($inputData);
         $kp_id = $pengajuanModel->getInsertID();
         
-        if($name2 != '-' || $sks2 != '-' ){
+        if($name2 != null || $sks2 != null || $name2 != ''){
             $partnerModel = new KppartnerModel();
             $inputData1 = [
                 'id_kp'              => $kp_id,
                 'id_siswa'           => $this->request->getVar('nama2'),
-                'sks'                => $this->request->getVar('alamat2'),
+                'sks'                => $this->request->getVar('sks2'),
+                'alamat'             => $this->request->getVar('alamat2'),
                 'nomor_telepon'      => $this->request->getVar('nomor2'),
                 'id_dosen'           => $this->request->getVar('doswal2'),
             ];

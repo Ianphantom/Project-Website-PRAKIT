@@ -39,4 +39,10 @@ class PengajuanModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    function getPengajuanKP($id){
+        $query = "SELECT id_kp from pengajuankp1 WHERE id_siswa='".$id."'";
+        $res = $this->db->query($query);
+        return $res->getNumRows();
+    }
 }

@@ -14,7 +14,7 @@ class KppartnerModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id_partnerkp', 'id_kp','id_siswa','sks','nomor_telepon','id_dosen'];
+    protected $allowedFields    = ['id_partnerkp', 'id_kp','id_siswa','sks','nomor_telepon','id_dosen','alamat'];
 
     // Dates
     protected $useTimestamps = false;
@@ -39,4 +39,10 @@ class KppartnerModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    function getPengajuanKP($id){
+        $query = "SELECT id_kp from pengajuankp1 WHERE id_siswa='".$id."'";
+        $res = $this->db->query($query);
+        return $res->getNumRows();
+    }
 }

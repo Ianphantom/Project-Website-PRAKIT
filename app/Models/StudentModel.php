@@ -39,4 +39,10 @@ class StudentModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    function getNamaSiswa($id= -1){
+        $query = "SELECT * FROM siswa INNER JOIN pengajuankp1 ON pengajuankp1.id_siswa=siswa.id_siswa OR pengajuankp1.id_partner=siswa.id_siswa";
+        $res = $this->db->query($query);
+        return $res->getResult();
+    }
 }

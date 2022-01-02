@@ -38,7 +38,7 @@
             <li class="sidebar-title">Menu</li>
             
             <li class="sidebar-item active">
-                <a href="../student/index.html" class='sidebar-link'>
+                <a href="<?php echo base_url('student/home'); ?>" class='sidebar-link'>
                     <i class="bi bi-grid-fill"></i>
                     <span>Dashboard</span>
                 </a>
@@ -148,7 +148,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <h6 class="text-muted font-semibold">Status</h6>
-                                    <h6 class="font-extrabold mb-0">On Progress</h6>
+                                    <h6 class="font-extrabold mb-0"><?php echo htmlentities($user['status']) ?></h6>
                                 </div>
                             </div>
                         </div>
@@ -165,7 +165,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <h6 class="text-muted font-semibold">Tempat KP</h6>
-                                    <h6 class="font-extrabold mb-0">Departemen Teknologi Informasi</h6>
+                                    <h6 class="font-extrabold mb-0"><?php echo htmlentities($user['nama_perusahaan']) ?></h6>
                                 </div>
                             </div>
                         </div>
@@ -182,7 +182,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <h6 class="text-muted font-semibold">Dosen Pembimbing</h6>
-                                    <h6 class="font-extrabold mb-0">Bapak Hari Ginardi</h6>
+                                    <h6 class="font-extrabold mb-0"><?php echo htmlentities($dosen['nama']) ?></h6>
                                 </div>
                             </div>
                         </div>
@@ -199,7 +199,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <h6 class="text-muted font-semibold">Pembimbing Lapangan</h6>
-                                    <h6 class="font-extrabold mb-0">Bapak Hari Ginardi</h6>
+                                    <h6 class="font-extrabold mb-0"><?php echo htmlentities($user['wakil_perusahaan']) ?></h6>
                                 </div>
                             </div>
                         </div>
@@ -215,8 +215,7 @@
                         <div class="card-body px-4 py-3-5">
                             <div class="row">
                                 <div class="d-flex align-items-left">
-                                    <div class="mb-0"><p>Kerja Praktek yang dilakukan yaitu Membuat Sistem Monitoring Mata Kuliah 
-                                    Kerja Praktek untuk mahasiswa Departemen Teknologi Informasi</p>
+                                    <div class="mb-0"><p><?php echo htmlentities($user['deskripsi_pekerjaan']) ?></p>
                                     </div>
                                 </div>
                             </div>                            
@@ -231,22 +230,12 @@
                                 <div class="card-content pb-4">
                                     <div class="recent-message d-flex px-4 py-3">
                                         <div class="mb-0"><p>Tanggal Dimulai</p>
-                                            <script>
-                                                function myFunction() {
-                                                var x = document.getElementById("myDate").value;
-                                                document.getElementById("demo").innerHTML = x;
-                                                }
-                                            </script>
-                                            </div>
+                                            <?php echo htmlentities($user['tanggal_pelaksanaan']) ?>
                                         </div>
+                                    </div>
                                     <div class="recent-message d-flex px-4 py-3">
                                         <div class="mb-0"><p>Tanggal Berakhir</p>
-                                            <script>
-                                                function myFunction() {
-                                                var x = document.getElementById("myDate").value;
-                                                document.getElementById("demo").innerHTML = x;
-                                                }
-                                            </script>
+                                            <?php echo htmlentities($user['tanggal_selesai']) ?>
                                             </div>
                                         </div>
                                     </div>
@@ -266,8 +255,8 @@
                             <img src="<?php echo base_url(); ?>/assets/images/faces/3.jpg" alt="Profile">
                         </div>
                         <div class="ms-3 name">
-                            <h5 class="font-semibold">Desya Ananda Puspita Dewi</h5>
-                            <h6 class="text-muted mb-0">05311840000046</h6>
+                            <h5 class="font-semibold"><?php echo htmlentities($whoAmI['nama']) ?></h5>
+                            <h6 class="text-muted mb-0"><?php echo htmlentities($whoAmI['nrp']) ?></h6>
                         </div>
                     </div>
                 </div>
@@ -277,16 +266,19 @@
                     <h4>Anggota Kelompok KP</h4>
                 </div>
                 <div class="card-content pb-4">
-                        <div class="recent-message d-flex px-4 py-3">
-                            <div class="avatar avatar-lg">
-                                <img src="<?php echo base_url(); ?>/assets/images/faces/5.jpg">
-                                <div class="name ms-3">
-                                    <h6 class="font-semibold">Kadek Nesya Kurniadewi</h6>
-                                    <h6 class="text-muted mb-0">05311840000009</h6>
+                        <?php foreach ($siswaKp as $e) : ?>
+                            <div class="recent-message d-flex px-4 py-3">
+                                <div class="avatar avatar-lg">
+                                    <img src="<?php echo base_url(); ?>/assets/images/faces/5.jpg">
+                                    <div class="name ms-3">
+                                        <h6 class="font-semibold"><?php echo htmlentities($e->nama) ?></h6>
+                                        <h6 class="text-muted mb-0"><?php echo htmlentities($e->nrp) ?></h6>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="recent-message d-flex px-4 py-3">
+                        <?php endforeach ?>
+                        
+                        <!-- <div class="recent-message d-flex px-4 py-3">
                             <div class="avatar avatar-lg">
                                 <img src="<?php echo base_url(); ?>/assets/images/faces/3.jpg">
                                 <div class="name ms-3">
@@ -294,7 +286,7 @@
                                     <h6 class="text-muted mb-0">05311840000046</h6>
                                 </div>
                             </div>
-                        </div>    
+                        </div>     -->
                     </div>
                 </div>
             </div>
