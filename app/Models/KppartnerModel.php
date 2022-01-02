@@ -41,8 +41,14 @@ class KppartnerModel extends Model
     protected $afterDelete    = [];
 
     function getPengajuanKP($id){
-        $query = "SELECT id_kp from pengajuankp1 WHERE id_siswa='".$id."'";
+        $query = "SELECT id_kp from partnerkp WHERE id_siswa='".$id."'";
         $res = $this->db->query($query);
         return $res->getNumRows();
+    }
+
+    function getKPData($id = -1){
+        $query = "SELECT partnerkp.*, b.nama_perusahaan, b.wakil_perusahaan, b.deskripsi_pekerjaan, b.tanggal_selesai, b.alamat_perusahaan, b.telepon_perusahaan, b.tanggal_pelaksanaan, b.profil_perusahaan, b.id_partner FROM `partnerkp` INNER JOIN pengajuankp1 AS b ON partnerkp.id_siswa=b.id_partner WHERE partnerkp.id_siswa='".$id."' LIMIT 1";
+        $res = $this->db->query($query);
+        return $res->getFirstRow();
     }
 }

@@ -148,7 +148,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <h6 class="text-muted font-semibold">Status</h6>
-                                    <h6 class="font-extrabold mb-0"><?php echo htmlentities($user['status']) ?></h6>
+                                    <h6 class="font-extrabold mb-0"><?php echo htmlentities($dataKP['status']) ?></h6>
                                 </div>
                             </div>
                         </div>
@@ -165,7 +165,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <h6 class="text-muted font-semibold">Tempat KP</h6>
-                                    <h6 class="font-extrabold mb-0"><?php echo htmlentities($user['nama_perusahaan']) ?></h6>
+                                    <h6 class="font-extrabold mb-0"><?php echo htmlentities($dataKP['nama_perusahaan']) ?></h6>
                                 </div>
                             </div>
                         </div>
@@ -199,7 +199,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <h6 class="text-muted font-semibold">Pembimbing Lapangan</h6>
-                                    <h6 class="font-extrabold mb-0"><?php echo htmlentities($user['wakil_perusahaan']) ?></h6>
+                                    <h6 class="font-extrabold mb-0"><?php echo htmlentities($dataKP['wakil_perusahaan']) ?></h6>
                                 </div>
                             </div>
                         </div>
@@ -215,7 +215,7 @@
                         <div class="card-body px-4 py-3-5">
                             <div class="row">
                                 <div class="d-flex align-items-left">
-                                    <div class="mb-0"><p><?php echo htmlentities($user['deskripsi_pekerjaan']) ?></p>
+                                    <div class="mb-0"><p><?php echo htmlentities($dataKP['deskripsi_pekerjaan']) ?></p>
                                     </div>
                                 </div>
                             </div>                            
@@ -230,12 +230,12 @@
                                 <div class="card-content pb-4">
                                     <div class="recent-message d-flex px-4 py-3">
                                         <div class="mb-0"><p>Tanggal Dimulai</p>
-                                            <?php echo htmlentities($user['tanggal_pelaksanaan']) ?>
+                                            <?php echo htmlentities($dataKP['tanggal_pelaksanaan']) ?>
                                         </div>
                                     </div>
                                     <div class="recent-message d-flex px-4 py-3">
                                         <div class="mb-0"><p>Tanggal Berakhir</p>
-                                            <?php echo htmlentities($user['tanggal_selesai']) ?>
+                                            <?php echo htmlentities($dataKP['tanggal_selesai']) ?>
                                             </div>
                                         </div>
                                     </div>
@@ -277,16 +277,6 @@
                                 </div>
                             </div>
                         <?php endforeach ?>
-                        
-                        <!-- <div class="recent-message d-flex px-4 py-3">
-                            <div class="avatar avatar-lg">
-                                <img src="<?php echo base_url(); ?>/assets/images/faces/3.jpg">
-                                <div class="name ms-3">
-                                    <h6 class="font-semibold">Desya Ananda Puspita Dewi</h6>
-                                    <h6 class="text-muted mb-0">05311840000046</h6>
-                                </div>
-                            </div>
-                        </div>     -->
                     </div>
                 </div>
             </div>
