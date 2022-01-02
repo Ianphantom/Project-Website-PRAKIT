@@ -118,12 +118,21 @@
         </div>
         <div class="card mt-3">
                 <div class="button text-center">
-                    <a href="../student/form-kp.html" class="btn btn-lg btn-success rounded-pill">Ajukan KP Sekarang</a>
+                    <a href="<?php echo base_url('student/formkp'); ?>" class="btn btn-lg btn-success rounded-pill">Ajukan KP Sekarang</a>
                 </div>
         </div>
     </div>
 </div>  
-
+<?php if(!empty(session()->getFlashdata('success'))){?>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Success! </strong><?php echo htmlentities(session()->getFlashdata('success')); ?>
+                </div>
+            <?php } ?>
+            <?php if(!empty(session()->getFlashdata('fail'))){?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Sorry! </strong><?php echo htmlentities(session()->getFlashdata('fail')); ?>
+                </div>
+<?php } ?>
 <div class="page-content">
     <section class="row">
         <div class="col-12 col-lg-9">

@@ -4,17 +4,17 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class LectureModel extends Model
+class PengajuanModel extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'dosen';
-    protected $primaryKey       = 'id_dosen';
+    protected $table            = 'pengajuankp1';
+    protected $primaryKey       = 'id_kp';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id_dosen', 'nama', 'email', 'password'];
+    protected $allowedFields    = ['id_kp', 'id_siswa', 'sks','alamat','nomor_telepon','id_dosen','nama_perusahaan','alamat_perusahaan','telepon_perusahaan','telepon_perusahaan','wakil_perusahaan','deskripsi_pekerjaan','tanggal_pelaksanaan','tanggal_selesai','profil_perusahaan','id_partner'];
 
     // Dates
     protected $useTimestamps = false;
@@ -39,10 +39,4 @@ class LectureModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
-
-    function selectDosenName(){
-        $query = "SELECT nama, id_dosen FROM dosen";
-        $res = $this->db->query($query);
-        return $res->getResult();
-    }
 }
