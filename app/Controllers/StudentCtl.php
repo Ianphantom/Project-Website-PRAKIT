@@ -140,6 +140,10 @@ class StudentCtl extends BaseController
         // return view('student/profile');
     }
 
+    public function userDaftarPengajuan(){
+        return view('student/pengajuan_kp');
+    }
+
     public function insertingLogbook(){
         $pengajuanModel = new PengajuanModel();
         $partnerModel = new KppartnerModel();
