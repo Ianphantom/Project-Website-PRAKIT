@@ -244,6 +244,14 @@ class StudentCtl extends BaseController
         return view('student/auth-login.php');
     }
 
+    public function logout(){
+        if(session()->has('loggedUser')){
+            session()->remove('loggedUser');
+            session()->destroy();
+            return redirect()->to(base_url());
+        }
+    }
+
     public function loggingAccount()
     {
         helper(['form']);
