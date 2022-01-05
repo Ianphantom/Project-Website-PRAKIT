@@ -43,7 +43,7 @@
             </li>
             
             <li class="sidebar-item ">
-                <a href="../student/logbook.html" class='sidebar-link'>
+                <a href="<?php echo base_url('student/logbook'); ?>" class='sidebar-link'>
                     <i class="bi bi-stack"></i>
                     <span>Logbook</span>
                 </a>

@@ -7,6 +7,7 @@ use App\Models\StudentModel;
 use App\Models\LectureModel;
 use App\Models\KppartnerModel;
 use App\Models\PengajuanModel;
+use App\Models\LogbookModel;
 
 class StudentCtl extends BaseController
 {
@@ -58,6 +59,74 @@ class StudentCtl extends BaseController
             'error' => '',
         ];
         return view('student/form-kp', $data);
+    }
+
+    public function pengumpulanLogbook(){
+        $pengajuanModel = new PengajuanModel();
+        $partnerModel = new KppartnerModel();
+        $logbookModel = new LogbookModel();
+        $data_kp = $pengajuanModel->getPengajuanKP(session()->get('loggedUser'));
+        if($data_kp == 0){
+            $data_partner = $partnerModel->getPengajuanKP(session()->get('loggedUser'));
+            if($data_partner == 0){
+                return view('student/logbook_null');
+            }
+        }
+        $data_logbook = $logbookModel->where('id_siswa', session()->get('loggedUser'))->findAll();
+        $data = [
+            'logbook' => $data_logbook,
+            'error' => '',
+        ];
+        return view('student/logbook', $data);
+    }
+
+    public function insertingLogbook(){
+        $pengajuanModel = new PengajuanModel();
+        $partnerModel = new KppartnerModel();
+        $logbookModel = new LogbookModel();
+        $data_kp = $pengajuanModel->getPengajuanKP(session()->get('loggedUser'));
+        if($data_kp == 0){
+            $data_partner = $partnerModel->getPengajuanKP(session()->get('loggedUser'));
+            if($data_partner == 0){
+                return view('student/logbook_null');
+            }$dataSiswaKP = $partnerModel->where('id_siswa', session()->get('loggedUser'))->first();
+        }else{
+            $dataSiswaKP = $pengajuanModel->where('id_siswa', session()->get('loggedUser'))->first();
+        }
+
+        helper(['form']);
+        $rules = [
+            'tanggal' => 'required',
+            'deskripsi' => 'required',
+            'file' => 'uploaded[file]|mime_in[file,image/jpg,image/jpeg,image/gif,image/png]',
+        ];
+
+        if(!$this-> validate($rules)){
+            $error = $this->validator->getErrors();
+            $data_logbook = $logbookModel->where('id_siswa', session()->get('loggedUser'))->findAll();
+            $data = [
+                'logbook' => $data_logbook,
+                'error' => $error,
+            ];
+            return view('student/logbook', $data);
+        }
+
+        helper('date');
+        helper('text');
+        $dataBerkas = $this->request->getFile('file');
+		$fileName = session()->get('loggedUser'). '_' . now('Asia/Kolkata') .  '_' .  strtolower(random_string('alnum', 48)) . '_' . $dataBerkas->getRandomName();
+        // echo $fileName;
+        
+		$dataBerkas->move('assets/logbook/', $fileName);
+        $inputData1 = [
+            'id_kp'                         => $dataSiswaKP['id_kp'],
+            'id_siswa'                      => session()->get('loggedUser'),
+            'tanggal'                       => $this->request->getVar('tanggal'),
+            'deskripsi_kegiatan'            => $this->request->getVar('deskripsi'),
+            'file'                          => $fileName,
+        ];
+        $inserting = $logbookModel->save($inputData1);
+        return redirect()->to(base_url('student/logbook'));
     }
 
     public function login()
