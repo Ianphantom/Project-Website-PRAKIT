@@ -37,6 +37,22 @@ class LectureCtl extends BaseController
         return view('lecture/logbook', $data);
     }
 
+    public function mahasiswakp(){
+        $lectureModel = new LectureModel();
+        $dataDosen = $lectureModel->where('id_dosen', session()->get('loggedUser'))->first();
+        
+        $data_kp1 = $lectureModel->getDataNilaiPengajuankp(session()->get('loggedUser'));
+        $data_kp2 = $lectureModel->getDataNilaiPartnerkp(session()->get('loggedUser'));
+
+        $data = [
+            'dataDosen' => $dataDosen,
+            'data1' => $data_kp1,
+            'data2' => $data_kp2,
+        ];
+
+        return view('lecture/all-mahasiswa', $data);
+    }
+
     public function register(){
         $data = [
             'error' => '',

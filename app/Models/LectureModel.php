@@ -67,4 +67,23 @@ class LectureModel extends Model
         $res = $this->db->query($query);
         return $res->getResult();            
     }
+
+    function getDataNilaiPengajuankp(){
+        $query = "SELECT *, c.nama as nama_dosen, siswa.nama as nama_siswa FROM `pengajuankp1` AS a 
+                    INNER JOIN siswa on a.id_siswa=siswa.id_siswa 
+                    INNER JOIN nilai as b on a.id_siswa=b.id_siswa 
+                    INNER JOIN dosen as c on a.id_dosen=c.id_dosen;";
+        $res = $this->db->query($query);
+        return $res->getResult();
+    }
+
+    function getDataNilaiPartnerkp(){
+        $query = "SELECT a.*, siswa.*, b.status, b.nama_perusahaan, d.nama as nama_dosen, c.nilai, siswa.nama as nama_siswa FROM `partnerkp` AS a 
+                    INNER JOIN siswa on a.id_siswa=siswa.id_siswa 
+                    INNER JOIN pengajuankp1 as b on a.id_kp=b.id_kp 
+                    INNER JOIN nilai as c on a.id_siswa=c.id_siswa
+                    INNER JOIN dosen as d on a.id_dosen=d.id_dosen";
+        $res = $this->db->query($query);
+        return $res->getResult();            
+    }
 }

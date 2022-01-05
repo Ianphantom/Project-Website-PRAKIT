@@ -45,6 +45,7 @@ $routes->get('student/logout', 'StudentCtl::logout', ['filter' => 'authStudent']
 $routes->get('lecture/login', 'LectureCtl::login');
 $routes->get('lecture/register', 'LectureCtl::register');
 $routes->get('lecture/home', 'LectureCtl::index', ['filter' => 'authLecture']);
+$routes->get('lecture/mahasiswakp', 'LectureCtl::mahasiswakp', ['filter' => 'authLecture']);
 $routes->get('lecture/logbook/(:any)', 'LectureCtl::showLogbook/$1' , ['filter' => 'authLecture']);
 
 

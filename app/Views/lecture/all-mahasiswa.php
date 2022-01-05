@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo base_url(); ?>/assets/css/bootstrap.css">
     
-    <link rel="stylesheet" href="<?php echo base_url(); ?>/assets/vendors/iconly/bold.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>/assets/vendors/iconly/bold.css">
 
     <link rel="stylesheet" href="<?php echo base_url(); ?>/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>/assets/vendors/bootstrap-icons/bootstrap-icons.css">
@@ -37,14 +37,14 @@
         <ul class="menu">
             <li class="sidebar-title">Menu</li>
             
-            <li class="sidebar-item active">
+            <li class="sidebar-item">
                 <a href="<?php echo base_url('lecture/home'); ?>" class='sidebar-link'>
                     <i class="bi bi-grid-fill"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
             
-            <li class="sidebar-item">
+            <li class="sidebar-item active">
                 <a href="<?php echo base_url('lecture/mahasiswakp'); ?>" class='sidebar-link'>
                     <i class="bi bi-stack"></i>
                     <span>Mahasiswa KP</span>
@@ -65,11 +65,12 @@
         </div>
         <div id="main">
             <header class="mb-3">
-                <a href="../lecture/progres-mahasiswa.html" class="burger-btn d-block d-xl-none">
+                <a href="../lecture/all-mahasiswa.html" class="burger-btn d-block d-xl-none">
                     <i class="bi bi-justify fs-3"></i>
                 </a>
             </header>
             
+
 <div>
     <nav class="navbar navbar-light">
         <div class="container d-block">
@@ -81,66 +82,65 @@
                     }
                 </script>
                 <a class="navbar-brand ms-5" href="../error-500.html">
-                    Dashboard
+                    Mahasiswa KP
                 </a>
             </div>
         </div>
     </nav>
 
+    <div class="container">
+        <div class="card mt-5">
+            <div class="card-header text-muted">
+                <h4 class="card-title text-center">Mahasiswa KP Departemen Teknologi Informasi</h4>
+            </div>
+            <div class="page-content">
+                <table>
+                    <tr>
+                        <th rowspan="1">Nama</th>
+                        <th rowspan="1">NRP</th>
+                        <th rowspan="1">Nilai</th>
+                        <th rowspan="1">Dosen Wali</th>
+                    </tr>
+                    <?php foreach($data1 as $data){ ?>
+                        <tr>
+                            <td><?php echo htmlentities($data->nama_siswa) ?></td>
+                            <td><?php echo htmlentities($data->nrp) ?></td>
+                            <td><?php echo htmlentities($data->nilai) ?></td>
+                            <td><?php echo htmlentities($data->nama_dosen) ?></td>
+                        </tr>
+                    <?php } ?>
+                    <?php foreach($data2 as $dataDua){ ?>
+                        <tr>
+                            <td><?php echo htmlentities($dataDua->nama_siswa) ?></td>
+                            <td><?php echo htmlentities($dataDua->nrp) ?></td>
+                            <td><?php echo htmlentities($dataDua->nilai) ?></td>
+                            <td><?php echo htmlentities($dataDua->nama_dosen) ?></td>
+                        </tr>
+                    <?php } ?>
+                </table>
+            </div>
+        </div>
+    </div> 
+    
+
 <div class="container">
-    <div class="card mt-5">
-        <div class="card-header text-muted">
-            <h4 class="card-title text-center">Selamat Datang <?php echo htmlentities($dataDosen['nama']) ?>, berikut list Mahasiswa Bimbingan:</h4>
-        </div>
-        <div class="page-content">
-            <table>
-                <tr>
-                    <th rowspan="1">Nama</th>
-                    <th rowspan="1">NRP</th>
-                    <th rowspan="1">Status</th>
-                    <th rowspan="1">Tempat Praktek</th>
-                    <th rowspan="1">Logbook</th>
-                </tr>
-                <?php foreach($data1 as $data){ ?>
-                    <tr>
-                        <td><?php echo htmlentities($data->nama) ?></td>
-                        <td><?php echo htmlentities($data->nrp) ?></td>
-                        <td><?php echo htmlentities($data->status) ?></td>
-                        <td><?php echo htmlentities($data->nama_perusahaan) ?></td>
-                        <td><a target="_blank" href="<?php echo base_url('lecture/logbook/'.htmlentities($data->id_siswa)) ?>"><div type="button" class="btn btn-outline-primary block">Show Logbook</div></a></td>
-                    </tr>
-                <?php } ?>
-                <?php foreach($data2 as $dataDua){ ?>
-                    <tr>
-                        <td><?php echo htmlentities($dataDua->nama) ?></td>
-                        <td><?php echo htmlentities($dataDua->nrp) ?></td>
-                        <td><?php echo htmlentities($dataDua->status) ?></td>
-                        <td><?php echo htmlentities($dataDua->nama_perusahaan) ?></td>
-                        <td><a target="_blank" href="<?php echo base_url('lecture/logbook/'.htmlentities($dataDua->id_siswa)) ?>"><div type="button" class="btn btn-outline-primary block">Show Logbook</div></a></td>
-                    </tr>
-                <?php } ?>
-            </table>
-        </div>
-    </div>
-</div>  
-
-
-
+    <link href="<?php echo base_url(); ?>/assets/dataTables/datatables.min.css">
+</div>
 <footer class="sticky-footer fixed-bottom">
     <div class="container my-auto">
         <div class="copyright text-center my-auto">
         <span>2021 &copy; Teknologi Informasi</span>
         </div>
     </div>
-</footer>      
+</footer>     
     
 <script src="<?php echo base_url(); ?>/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 <script src="<?php echo base_url(); ?>/assets/js/bootstrap.bundle.min.js"></script>
 <script src="<?php echo base_url(); ?>/assets/vendors/apexcharts/apexcharts.js"></script>
 <script src="<?php echo base_url(); ?>/assets/js/pages/dashboard.js"></script>
+<script src="<?php echo base_url(); ?>/assets/dataTables/datatables.min.js"></script>
 
-
-<script src="<?php echo base_url(); ?>/assets/js/main.js"></script>
+<script src="../assets/js/main.js"></script>
 </body>
 
 </html>

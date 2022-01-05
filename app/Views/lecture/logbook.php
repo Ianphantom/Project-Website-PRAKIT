@@ -38,14 +38,14 @@
             <li class="sidebar-title">Menu</li>
             
             <li class="sidebar-item active">
-                <a href="../lecture/progres-mahasiswa.html" class='sidebar-link'>
+                <a href="<?php echo base_url('lecture/home'); ?>" class='sidebar-link'>
                     <i class="bi bi-grid-fill"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
             
             <li class="sidebar-item">
-                <a href="../lecture/all-mahasiswa.html" class='sidebar-link'>
+                <a href="<?php echo base_url('lecture/mahasiswakp'); ?>" class='sidebar-link'>
                     <i class="bi bi-stack"></i>
                     <span>Mahasiswa KP</span>
                 </a>
