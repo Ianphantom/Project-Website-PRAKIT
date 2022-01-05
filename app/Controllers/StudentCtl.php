@@ -400,6 +400,13 @@ class StudentCtl extends BaseController
         $pengajuanModel = new PengajuanModel();
         $pengajuanModel->insert($inputData);
         $kp_id = $pengajuanModel->getInsertID();
+
+        $nilaiModel = new NilaiModel();
+        $inputNilai = [
+            'id_kp'     => $kp_id,
+            'id_siswa'  => session()->get('loggedUser'),
+        ];
+        $nilaiModel->insert($inputNilai);
         
         if($name2 != null || $sks2 != null || $name2 != ''){
             $partnerModel = new KppartnerModel();
@@ -417,6 +424,12 @@ class StudentCtl extends BaseController
                     'id_partner'              => $this->request->getVar('nama2'),
                 ];
                 $pengajuanModel->update($kp_id, $inputData2);
+
+                $inputNilai1 = [
+                    'id_kp'     => $kp_id,
+                    'id_siswa'  => $this->request->getVar('nama2'),
+                ];
+                $nilaiModel->insert($inputNilai1);
             }
 
         }
