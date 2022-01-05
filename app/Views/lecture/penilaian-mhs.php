@@ -8,15 +8,15 @@
     
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="../assets/css/bootstrap.css">
     
-    <link rel="stylesheet" href="<?php echo base_url(); ?>/assets/vendors/iconly/bold.css">
+<link rel="stylesheet" href="../assets/vendors/iconly/bold.css">
 
-    <link rel="stylesheet" href="<?php echo base_url(); ?>/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>/assets/vendors/bootstrap-icons/bootstrap-icons.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>/assets/css/app.css">
-    <link rel="shortcut icon" href="<?php echo base_url(); ?>/assets/images/favicon.svg" type="image/x-icon">
-    <link rel="icon" type="image/png" href="<?php echo base_url(); ?>/assets/images/logo/big-logo.png">
+    <link rel="stylesheet" href="../assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="../assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="shortcut icon" href="../assets/images/favicon.svg" type="image/x-icon">
+    <link rel="icon" type="image/png" href="../assets/images/logo/big-logo.png">
 </head>
 
 <body>
@@ -26,7 +26,7 @@
     <div class="sidebar-header">
         <div class="d-flex justify-content-between">
             <div class="logo">
-                <img src="<?php echo base_url(); ?>/assets/images/logo/logo.png" alt="prakit">
+                <img src="../assets/images/logo/logo.png" alt="prakit">
             </div>
             <div class="toggler">
                 <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
@@ -37,7 +37,7 @@
         <ul class="menu">
             <li class="sidebar-title">Menu</li>
             
-            <li class="sidebar-item active">
+            <li class="sidebar-item">
                 <a href="<?php echo base_url('lecture/home'); ?>" class='sidebar-link'>
                     <i class="bi bi-grid-fill"></i>
                     <span>Dashboard</span>
@@ -51,7 +51,7 @@
                 </a>
             </li>
             
-            <li class="sidebar-item">
+            <li class="sidebar-item active">
                 <a href="<?php echo base_url('lecture/penilaian-mhs'); ?>" class='sidebar-link'>
                     <i class="bi bi-collection-fill"></i>
                     <span>Surat Penilaian KP Mahasiswa</span>
@@ -65,7 +65,7 @@
         </div>
         <div id="main">
             <header class="mb-3">
-                <a href="../lecture/progres-mahasiswa.html" class="burger-btn d-block d-xl-none">
+                <a href="../lecture/penilaian-mhs.html" class="burger-btn d-block d-xl-none">
                     <i class="bi bi-justify fs-3"></i>
                 </a>
             </header>
@@ -81,7 +81,7 @@
                     }
                 </script>
                 <a class="navbar-brand ms-5" href="../error-500.html">
-                    Dashboard
+                    Penilaian Kerja Praktek Mahasiswa
                 </a>
             </div>
         </div>
@@ -90,41 +90,40 @@
 <div class="container">
     <div class="card mt-5">
         <div class="card-header text-muted">
-            <h4 class="card-title text-center">Selamat Datang <?php echo htmlentities($dataDosen['nama']) ?>, berikut list Mahasiswa Bimbingan:</h4>
+            <h4 class="card-title text-center">List Mahasiswa Bimbingan:</h4>
         </div>
         <div class="page-content">
             <table>
                 <tr>
                     <th rowspan="1">Nama</th>
                     <th rowspan="1">NRP</th>
-                    <th rowspan="1">Status</th>
-                    <th rowspan="1">Tempat Praktek</th>
-                    <th rowspan="1">Logbook</th>
+                    <th rowspan="1">Nilai</th>
+                    <th rowspan="1">Aksi</th>
                 </tr>
                 <?php foreach($data1 as $data){ ?>
                     <tr>
-                        <td><?php echo htmlentities($data->nama) ?></td>
+                        <td><?php echo htmlentities($data->nama_siswa) ?></td>
                         <td><?php echo htmlentities($data->nrp) ?></td>
-                        <td><?php echo htmlentities($data->status) ?></td>
-                        <td><?php echo htmlentities($data->nama_perusahaan) ?></td>
-                        <td><a target="_blank" href="<?php echo base_url('lecture/logbook/'.htmlentities($data->id_siswa)) ?>"><div type="button" class="btn btn-outline-primary block">Show Logbook</div></a></td>
+                        <td><?php echo htmlentities($data->nilai) ?></td>
+                        <td>
+                            <a href="<?php echo base_url('lecture/updatenilai/'.$data->id_siswa.'/'.$data->id_nilai); ?>" class="btn btn-primary btn-md shadow-md">Ubah Nilai</a>
+                        </td>
                     </tr>
                 <?php } ?>
                 <?php foreach($data2 as $dataDua){ ?>
                     <tr>
-                        <td><?php echo htmlentities($dataDua->nama) ?></td>
+                        <td><?php echo htmlentities($dataDua->nama_siswa) ?></td>
                         <td><?php echo htmlentities($dataDua->nrp) ?></td>
-                        <td><?php echo htmlentities($dataDua->status) ?></td>
-                        <td><?php echo htmlentities($dataDua->nama_perusahaan) ?></td>
-                        <td><a target="_blank" href="<?php echo base_url('lecture/logbook/'.htmlentities($dataDua->id_siswa)) ?>"><div type="button" class="btn btn-outline-primary block">Show Logbook</div></a></td>
+                        <td><?php echo htmlentities($dataDua->nilai) ?></td>
+                        <td>
+                            <a href="<?php echo base_url('lecture/updatenilai/'.$dataDua->id_siswa.'/'.$dataDua->id_nilai); ?>" class="btn btn-primary btn-md shadow-md">Ubah Nilai</a>
+                        </td>
                     </tr>
                 <?php } ?>
             </table>
         </div>
     </div>
-</div>  
-
-
+</div> 
 
 <footer class="sticky-footer fixed-bottom">
     <div class="container my-auto">
@@ -132,15 +131,15 @@
         <span>2021 &copy; Teknologi Informasi</span>
         </div>
     </div>
-</footer>      
+</footer>     
     
-<script src="<?php echo base_url(); ?>/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-<script src="<?php echo base_url(); ?>/assets/js/bootstrap.bundle.min.js"></script>
-<script src="<?php echo base_url(); ?>/assets/vendors/apexcharts/apexcharts.js"></script>
-<script src="<?php echo base_url(); ?>/assets/js/pages/dashboard.js"></script>
+<script src="../assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<script src="../assets/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/vendors/apexcharts/apexcharts.js"></script>
+<script src="../assets/js/pages/dashboard.js"></script>
 
 
-<script src="<?php echo base_url(); ?>/assets/js/main.js"></script>
+<script src="../assets/js/main.js"></script>
 </body>
 
 </html>

@@ -52,6 +52,27 @@ class LectureModel extends Model
         return $res->getNumRows();
     }
 
+    function cekPermissionPengajuankp($id_dosen, $id_siswa, $id_nilai){
+        $query = "SELECT *, c.nama as nama_dosen, siswa.nama as nama_siswa FROM `pengajuankp1` AS a 
+                    INNER JOIN siswa on a.id_siswa=siswa.id_siswa 
+                    INNER JOIN nilai as b on a.id_siswa=b.id_siswa 
+                    INNER JOIN dosen as c on a.id_dosen=c.id_dosen
+                    where a.id_dosen='".$id_dosen."' AND siswa.id_siswa='".$id_siswa."' AND b.id_nilai='".$id_nilai."';";
+        $res = $this->db->query($query);
+        return $res;
+    }
+
+    function cekPermissionPartnerkp($id_dosen, $id_siswa, $id_nilai){
+        $query = "SELECT a.*, siswa.*, b.status, b.nama_perusahaan, d.nama as nama_dosen, c.nilai, siswa.nama as nama_siswa FROM `partnerkp` AS a 
+                    INNER JOIN siswa on a.id_siswa=siswa.id_siswa 
+                    INNER JOIN pengajuankp1 as b on a.id_kp=b.id_kp 
+                    INNER JOIN nilai as c on a.id_siswa=c.id_siswa 
+                    INNER JOIN dosen as d on a.id_dosen=d.id_dosen 
+                    where a.id_dosen='".$id_dosen."' AND siswa.id_siswa='".$id_siswa."' AND c.id_nilai='".$id_nilai."';";
+        $res = $this->db->query($query);
+        return $res;
+    }
+
     function getDataPengajuankp($id= -1){
         $query = "SELECT * FROM `pengajuankp1` AS a 
                     INNER JOIN siswa on a.id_siswa=siswa.id_siswa 
@@ -83,6 +104,25 @@ class LectureModel extends Model
                     INNER JOIN pengajuankp1 as b on a.id_kp=b.id_kp 
                     INNER JOIN nilai as c on a.id_siswa=c.id_siswa
                     INNER JOIN dosen as d on a.id_dosen=d.id_dosen";
+        $res = $this->db->query($query);
+        return $res->getResult();            
+    }
+
+    function getDataNilaiPengajuankpBimbingan($id=-1){
+        $query = "SELECT *, c.nama as nama_dosen, siswa.nama as nama_siswa FROM `pengajuankp1` AS a 
+                    INNER JOIN siswa on a.id_siswa=siswa.id_siswa 
+                    INNER JOIN nilai as b on a.id_siswa=b.id_siswa 
+                    INNER JOIN dosen as c on a.id_dosen=c.id_dosen WHERE a.id_dosen='".$id."';";
+        $res = $this->db->query($query);
+        return $res->getResult();
+    }
+
+    function getDataNilaiPartnerkpBimbingan($id=-1){
+        $query = "SELECT a.*, siswa.*, b.status, b.nama_perusahaan, d.nama as nama_dosen, c.nilai, c.id_nilai, siswa.nama as nama_siswa FROM `partnerkp` AS a 
+                    INNER JOIN siswa on a.id_siswa=siswa.id_siswa 
+                    INNER JOIN pengajuankp1 as b on a.id_kp=b.id_kp 
+                    INNER JOIN nilai as c on a.id_siswa=c.id_siswa
+                    INNER JOIN dosen as d on a.id_dosen=d.id_dosen WHERE a.id_dosen='".$id."'";
         $res = $this->db->query($query);
         return $res->getResult();            
     }

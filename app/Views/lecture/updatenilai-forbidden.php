@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>PRAKIT</title>
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="<?php echo base_url(''); ?>/assets/css/bootstrap.css">
-        
-    <link rel="stylesheet" href="<?php echo base_url(''); ?>/assets/vendors/iconly/bold.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRAKIT</title>
     
-        <link rel="stylesheet" href="<?php echo base_url(''); ?>/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
-        <link rel="stylesheet" href="<?php echo base_url(''); ?>/assets/vendors/bootstrap-icons/bootstrap-icons.css">
-        <link rel="stylesheet" href="<?php echo base_url(''); ?>/assets/css/app.css">
-        <link rel="shortcut icon" href="<?php echo base_url(''); ?>/assets/images/favicon.svg" type="image/x-icon">
-        <link rel="icon" type="image/png" href="<?php echo base_url(''); ?>/assets/images/logo/big-logo.png">
-    </head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="<?php echo base_url(''); ?>/assets/css/bootstrap.css">
+    
+<link rel="stylesheet" href="<?php echo base_url(''); ?>/assets/vendors/iconly/bold.css">
+
+    <link rel="stylesheet" href="<?php echo base_url(''); ?>/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="<?php echo base_url(''); ?>/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="<?php echo base_url(''); ?>/assets/css/app.css">
+    <link rel="shortcut icon" href="<?php echo base_url(''); ?>/assets/images/favicon.svg" type="image/x-icon">
+    <link rel="icon" type="image/png" href="<?php echo base_url(''); ?>/assets/images/logo/big-logo.png">
+</head>
 
 <body>
     <div id="app">
@@ -37,7 +37,7 @@
         <ul class="menu">
             <li class="sidebar-title">Menu</li>
             
-            <li class="sidebar-item active">
+            <li class="sidebar-item">
                 <a href="<?php echo base_url('lecture/home'); ?>" class='sidebar-link'>
                     <i class="bi bi-grid-fill"></i>
                     <span>Dashboard</span>
@@ -51,7 +51,7 @@
                 </a>
             </li>
             
-            <li class="sidebar-item">
+            <li class="sidebar-item active">
                 <a href="<?php echo base_url('lecture/penilaian-mhs'); ?>" class='sidebar-link'>
                     <i class="bi bi-collection-fill"></i>
                     <span>Surat Penilaian KP Mahasiswa</span>
@@ -62,14 +62,14 @@
     </div>
     <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
 </div>
-    </div>
+        </div>
         <div id="main">
             <header class="mb-3">
-                <a href="../student/logbook.html" class="burger-btn d-block d-xl-none">
+                <a href="../lecture/penilaian-mhs.html" class="burger-btn d-block d-xl-none">
                     <i class="bi bi-justify fs-3"></i>
                 </a>
             </header>
-        
+            
 <div>
     <nav class="navbar navbar-light">
         <div class="container d-block">
@@ -81,34 +81,14 @@
                     }
                 </script>
                 <a class="navbar-brand ms-5" href="../error-500.html">
-                    Logbook
+                    Penilaian Kerja Praktek Mahasiswa
                 </a>
             </div>
         </div>
     </nav>
-</div>
 
-<div class="container">
-    <div class="card mt-5">
-        <div class="page-content">
-            <table>
-                <tr>
-                    <th rowspan="1">Tanggal</th>
-                    <th rowspan="1">Deskripsi Kegiatan</th>
-                    <th rowspan="1">Bukti Kegiatan</th>
-                </tr>
-                <?php foreach($logbook as $log){ ?>
-                    <tr>
-                        <td><?php echo htmlentities($log['tanggal']) ?></td>
-                        <td><?php echo htmlentities($log['deskripsi_kegiatan']) ?></td>
-                        <td><a target="_blank" href="<?php echo base_url('assets/logbook/'.htmlentities($log['file'])) ?>"><div type="button" class="btn btn-outline-primary block">Foto Kegiatan</div></a></td>
-                    </tr>
-                <?php } ?>
-            </table>
-        </div>
-    </div>
-</div>  
-
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>Sorry! </strong> Forbidden!!
 </div>
 
 <footer class="sticky-footer fixed-bottom">
@@ -117,15 +97,15 @@
         <span>2021 &copy; Teknologi Informasi</span>
         </div>
     </div>
-</footer>      
-
+</footer>     
+    
 <script src="<?php echo base_url(''); ?>/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 <script src="<?php echo base_url(''); ?>/assets/js/bootstrap.bundle.min.js"></script>
 <script src="<?php echo base_url(''); ?>/assets/vendors/apexcharts/apexcharts.js"></script>
 <script src="<?php echo base_url(''); ?>/assets/js/pages/dashboard.js"></script>
 
 
-<script src="<?php echo base_url(''); ?>/assets/js/main.js"></script>
+<script src="../assets/js/main.js"></script>
 </body>
 
 </html>

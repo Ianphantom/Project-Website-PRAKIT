@@ -52,7 +52,7 @@
             </li>
             
             <li class="sidebar-item">
-                <a href="../lecture/penilaian-mhs.html" class='sidebar-link'>
+                <a href="<?php echo base_url('lecture/penilaian-mhs'); ?>" class='sidebar-link'>
                     <i class="bi bi-collection-fill"></i>
                     <span>Surat Penilaian KP Mahasiswa</span>
                 </a>
@@ -65,7 +65,7 @@
         </div>
         <div id="main">
             <header class="mb-3">
-                <a href="../lecture/all-mahasiswa.html" class="burger-btn d-block d-xl-none">
+                <a href="<?php echo base_url('lecture/mahasiswakp'); ?>" class="burger-btn d-block d-xl-none">
                     <i class="bi bi-justify fs-3"></i>
                 </a>
             </header>

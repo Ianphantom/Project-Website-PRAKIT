@@ -9,6 +9,7 @@ use App\Models\KppartnerModel;
 use App\Models\PengajuanModel;
 use App\Models\LogbookModel;
 use App\Models\LaporanModel;
+use App\Models\NilaiModel;
 
 class LectureCtl extends BaseController
 {
@@ -51,6 +52,66 @@ class LectureCtl extends BaseController
         ];
 
         return view('lecture/all-mahasiswa', $data);
+    }
+
+    public function penilaianMahasiswa(){
+        $lectureModel = new LectureModel();
+        $dataDosen = $lectureModel->where('id_dosen', session()->get('loggedUser'))->first();
+        
+        $data_kp1 = $lectureModel->getDataNilaiPengajuankpBimbingan(session()->get('loggedUser'));
+        $data_kp2 = $lectureModel->getDataNilaiPartnerkpBimbingan(session()->get('loggedUser'));
+
+        $data = [
+            'dataDosen' => $dataDosen,
+            'data1' => $data_kp1,
+            'data2' => $data_kp2,
+        ];
+        return view('lecture/penilaian-mhs', $data);
+    }
+
+    public function updateNilai($seg1 = false, $seg2 = false){
+        $studentModel = new StudentModel();
+        $nilaiModel = new NilaiModel();
+        $lectureModel = new lectureModel();
+        $cekPermissionPengajuanKP = $lectureModel->cekPermissionPengajuankp(session()->get('loggedUser'),$seg1,$seg2);
+        $cekPermissionPartnerKP = $lectureModel->cekPermissionPartnerkp(session()->get('loggedUser'),$seg1,$seg2);
+        if($cekPermissionPengajuanKP->getNumRows() == 0 && $cekPermissionPartnerKP->getNumRows() == 0 ){
+            return view('lecture/updatenilai-forbidden');
+        }
+
+        $dataSiswa = $studentModel->where('id_siswa', $seg1)->first();
+        $dataNilai = $nilaiModel->where('id_nilai', $seg2)->first();
+        session()->setTempdata('id_nilai', $seg2, 3600);
+        $data = [
+            'userid'    => $seg1,
+            'id_nilai'     => $seg2,
+            'dataSiswa' => $dataSiswa,
+            'dataNilai' => $dataNilai,
+        ];
+        return view('lecture/updatenilai', $data);
+    }
+
+    public function updatingNilai(){
+        $nilaiModel = new NilaiModel();
+
+        $inputNilai1 = [
+            'nilai'  => $this->request->getVar('nilai'),
+        ];
+        $nilaiModel->update(session()->getTempdata('id_nilai'), $inputNilai1);
+        $lectureModel = new LectureModel();
+        $dataDosen = $lectureModel->where('id_dosen', session()->get('loggedUser'))->first();
+        
+        $data_kp1 = $lectureModel->getDataNilaiPengajuankpBimbingan(session()->get('loggedUser'));
+        $data_kp2 = $lectureModel->getDataNilaiPartnerkpBimbingan(session()->get('loggedUser'));
+
+        $data = [
+            'dataDosen' => $dataDosen,
+            'data1' => $data_kp1,
+            'data2' => $data_kp2,
+        ];
+        session()->removeTempdata('id_nilai');
+        return view('lecture/penilaian-mhs', $data);
+        return redirect()->to(base_url('lecture/penilaian-mhs'))->with('success', 'Mark Updated');
     }
 
     public function register(){
