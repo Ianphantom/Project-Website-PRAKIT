@@ -106,6 +106,40 @@ class StudentCtl extends BaseController
         return view('student/pengumpulan-berkas', $data);
     }
 
+    public function userProfile(){
+        $pengajuanModel = new PengajuanModel();
+        $studentModel = new StudentModel();
+        $lectureModel = new LectureModel();
+        $partnerModel = new KppartnerModel();
+
+        $data_kp = $pengajuanModel->getPengajuanKP(session()->get('loggedUser'));
+        if($data_kp == 0){
+            $data_partner = $partnerModel->getPengajuanKP(session()->get('loggedUser'));
+            if($data_partner == 0){
+                return view('student/index_null');
+            }
+            $dataSiswaKP = $partnerModel->where('id_siswa', session()->get('loggedUser'))->first();
+        }else{
+            $dataSiswaKP = $pengajuanModel->where('id_siswa', session()->get('loggedUser'))->first();
+        }
+
+        $siswaKp = $studentModel->getNamaSiswa(session()->get('loggedUser'));
+        $whoAmI = $studentModel->where('id_siswa', session()->get('loggedUser'))->first();
+        $dataKP = $pengajuanModel->where('id_kp', $dataSiswaKP['id_kp'])->first();
+        $dosenPembimbing = $lectureModel->where('id_dosen', $dataSiswaKP['id_dosen'])->first();
+        
+
+        $data = [
+            'user' => $dataSiswaKP,
+            'dataKP' => $dataKP,
+            'dosen' => $dosenPembimbing,
+            'siswaKp' => $siswaKp,
+            'whoAmI' => $whoAmI,
+        ]; 
+        return view('student/profile', $data);
+        // return view('student/profile');
+    }
+
     public function insertingLogbook(){
         $pengajuanModel = new PengajuanModel();
         $partnerModel = new KppartnerModel();

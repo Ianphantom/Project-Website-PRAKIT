@@ -63,23 +63,23 @@
                 </ul>
             </li>
             
-            <li class="sidebar-item  has-sub">
-                <a href="../student/profile.html" class='sidebar-link'>
+            <li class="sidebar-item has-sub">
+                <a href="<?php echo base_url('student/profile'); ?>" class='sidebar-link'>
                     <i class="bi bi-person-badge-fill"></i>
                     <span>Profile</span>
                 </a>
                 <ul class="submenu ">
                     <li class="submenu-item ">
-                        <a href="../student/profile.html">Profile</a>
+                        <a href="<?php echo base_url('student/profile'); ?>">Profile</a>
                     </li>
                     <li class="submenu-item ">
-                        <a href="../student/pengajuan_kp.html">Pengajuan KP</a>
+                        <a href="<?php echo base_url('student/pengajuanKP'); ?>">Pengajuan KP</a>
                     </li>
                     <li class="submenu-item ">
-                        <a href="../student/dokumen.html">Unduh Dokumen</a>
+                        <a href="<?php echo base_url('student/dokumen'); ?>">Unduh Dokumen</a>
                     </li>
                 </ul>
-            </li>    
+            </li>     
         </ul>
     </div>
     <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>

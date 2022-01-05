@@ -38,6 +38,7 @@ $routes->get('student/home', 'StudentCtl::index', ['filter' => 'authStudent']);
 $routes->get('student/formkp', 'StudentCtl::formPengajuan', ['filter' => 'authStudent']);
 $routes->get('student/logbook', 'StudentCtl::pengumpulanLogbook', ['filter' => 'authStudent']);
 $routes->get('student/pengumpulan-berkas', 'StudentCtl::pengumpulanBerkas', ['filter' => 'authStudent']);
+$routes->get('student/profile', 'StudentCtl::userProfile', ['filter' => 'authStudent']);
 
 $routes->get('lecture/login', 'LectureCtl::login');
 $routes->get('lecture/register', 'LectureCtl::register');
