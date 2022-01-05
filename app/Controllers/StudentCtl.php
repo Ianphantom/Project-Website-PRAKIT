@@ -8,6 +8,7 @@ use App\Models\LectureModel;
 use App\Models\KppartnerModel;
 use App\Models\PengajuanModel;
 use App\Models\LogbookModel;
+use App\Models\LaporanModel;
 
 class StudentCtl extends BaseController
 {
@@ -80,6 +81,31 @@ class StudentCtl extends BaseController
         return view('student/logbook', $data);
     }
 
+    public function pengumpulanBerkas(){
+        $pengajuanModel = new PengajuanModel();
+        $studentModel = new StudentModel();
+        $lectureModel = new LectureModel();
+        $partnerModel = new KppartnerModel();
+        $data_kp = $pengajuanModel->getPengajuanKP(session()->get('loggedUser'));
+        if($data_kp == 0){
+            $data_partner = $partnerModel->getPengajuanKP(session()->get('loggedUser'));
+            if($data_partner == 0){
+                return view('student/pengumpulan-berkas_null');
+            }
+            $dataSiswaKP = $partnerModel->where('id_siswa', session()->get('loggedUser'))->first();
+        }else{
+            $dataSiswaKP = $pengajuanModel->where('id_siswa', session()->get('loggedUser'))->first();
+        }
+        $whoAmI = $studentModel->where('id_siswa', session()->get('loggedUser'))->first();
+        $dosenPembimbing = $lectureModel->where('id_dosen', $dataSiswaKP['id_dosen'])->first();
+        $data = [
+            'dosen' => $dosenPembimbing,
+            'whoAmI' => $whoAmI,
+            'error' => '',
+        ]; 
+        return view('student/pengumpulan-berkas', $data);
+    }
+
     public function insertingLogbook(){
         $pengajuanModel = new PengajuanModel();
         $partnerModel = new KppartnerModel();
@@ -127,6 +153,52 @@ class StudentCtl extends BaseController
         ];
         $inserting = $logbookModel->save($inputData1);
         return redirect()->to(base_url('student/logbook'));
+    }
+
+    public function insertingLaporan(){
+        $pengajuanModel = new PengajuanModel();
+        $partnerModel = new KppartnerModel();
+        $laporanModel = new LaporanModel();
+        $data_kp = $pengajuanModel->getPengajuanKP(session()->get('loggedUser'));
+        if($data_kp == 0){
+            $data_partner = $partnerModel->getPengajuanKP(session()->get('loggedUser'));
+            if($data_partner == 0){
+                return view('student/logbook_null');
+            }$dataSiswaKP = $partnerModel->where('id_siswa', session()->get('loggedUser'))->first();
+        }else{
+            $dataSiswaKP = $pengajuanModel->where('id_siswa', session()->get('loggedUser'))->first();
+        }
+
+        helper(['form']);
+        $rules = [
+            'namaBerkas' => 'required',
+            'keterangan' => 'required',
+            'file' => 'uploaded[file]',
+        ];
+
+        if(!$this-> validate($rules)){
+            $error = $this->validator->getErrors();
+            $data = [
+                'error' => $error,
+            ];
+            return view('student/pengumpulan-berkas', $data);
+        }
+
+        helper('date');
+        helper('text');
+        $dataBerkas = $this->request->getFile('file');
+		$fileName = session()->get('loggedUser'). '_' . now('Asia/Kolkata') .  '_' .  strtolower($this->request->getVar('namaBerkas')) . '_' . $dataBerkas->getRandomName();
+        // echo $fileName;
+        
+		$dataBerkas->move('assets/laporankp/', $fileName);
+        $inputData1 = [
+            'id_kp'                         => $dataSiswaKP['id_kp'],
+            'id_siswa'                      => session()->get('loggedUser'),
+            'keterangan'                    => $this->request->getVar('keterangan'),
+            'file'                          => $fileName,
+        ];
+        $inserting = $laporanModel->save($inputData1);
+        return redirect()->to(base_url('student/home'))->with('success', 'Laporan KP has been Uploaded');;
     }
 
     public function login()

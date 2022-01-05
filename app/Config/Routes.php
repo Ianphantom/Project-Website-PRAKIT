@@ -37,6 +37,7 @@ $routes->get('student/register', 'StudentCtl::register');
 $routes->get('student/home', 'StudentCtl::index', ['filter' => 'authStudent']);
 $routes->get('student/formkp', 'StudentCtl::formPengajuan', ['filter' => 'authStudent']);
 $routes->get('student/logbook', 'StudentCtl::pengumpulanLogbook', ['filter' => 'authStudent']);
+$routes->get('student/pengumpulan-berkas', 'StudentCtl::pengumpulanBerkas', ['filter' => 'authStudent']);
 
 $routes->get('lecture/login', 'LectureCtl::login');
 $routes->get('lecture/register', 'LectureCtl::register');

@@ -52,13 +52,13 @@
             </li>
             
             <li class="sidebar-item  has-sub ">
-                <a href="../student/Pengumpulan-berkas.html" class='sidebar-link'>
+                <a href="<?php echo base_url('student/pengumpulan-berkas'); ?>" class='sidebar-link'>
                     <i class="bi bi-collection-fill"></i>
                     <span>Reports</span>
                 </a>
                 <ul class="submenu ">
                     <li class="submenu-item ">
-                        <a href="../student/Pengumpulan-berkas.html">Pengumpulan Laporan</a>
+                        <a href="<?php echo base_url('student/pengumpulan-berkas'); ?>">Pengumpulan Laporan</a>
                     </li>
                 </ul>
             </li>
