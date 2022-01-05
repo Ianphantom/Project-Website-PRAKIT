@@ -3,13 +3,38 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\StudentModel;
 use App\Models\LectureModel;
+use App\Models\KppartnerModel;
+use App\Models\PengajuanModel;
+use App\Models\LogbookModel;
+use App\Models\LaporanModel;
 
 class LectureCtl extends BaseController
 {
     public function index()
     {
-        return view('lecture/progres-mahasiswa');
+        $lectureModel = new LectureModel();
+        $dataDosen = $lectureModel->where('id_dosen', session()->get('loggedUser'))->first();
+        
+        $data_kp1 = $lectureModel->getDataPengajuankp(session()->get('loggedUser'));
+        $data_kp2 = $lectureModel->getDataPartnerkp(session()->get('loggedUser'));
+        
+        $data = [
+            'dataDosen' => $dataDosen,
+            'data1' => $data_kp1,
+            'data2' => $data_kp2,
+        ];
+        return view('lecture/progres-mahasiswa', $data);
+    }
+
+    public function showLogbook($seg1 = false){
+        $logbookModel = new LogbookModel();
+        $userLogbook = $logbookModel->where('id_siswa', $seg1)->findAll();
+        $data = [
+            "logbook" => $userLogbook,
+        ];
+        return view('lecture/logbook', $data);
     }
 
     public function register(){

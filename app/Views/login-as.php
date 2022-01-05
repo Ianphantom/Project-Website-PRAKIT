@@ -23,7 +23,7 @@
             <h2 class="auth-title">Log in as</h2>
             <p class="auth-subtitle mb-3">Choose your role to login!</p>
 
-            <form action="lecture/auth-login-lecture.html">        
+            <form action="<?php echo base_url() ?>/lecture/login">        
                 <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5">Log in as Lecture</button>
             </form>
 

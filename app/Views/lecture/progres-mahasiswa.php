@@ -38,7 +38,7 @@
             <li class="sidebar-title">Menu</li>
             
             <li class="sidebar-item active">
-                <a href="../lecture/progres-mahasiswa.html" class='sidebar-link'>
+                <a href="<?php echo base_url('lecture/home'); ?>" class='sidebar-link'>
                     <i class="bi bi-grid-fill"></i>
                     <span>Dashboard</span>
                 </a>
@@ -90,7 +90,7 @@
 <div class="container">
     <div class="card mt-5">
         <div class="card-header text-muted">
-            <h4 class="card-title text-center">Selamat Datang Hari Ginardi, berikut list Mahasiswa Bimbingan:</h4>
+            <h4 class="card-title text-center">Selamat Datang <?php echo htmlentities($dataDosen['nama']) ?>, berikut list Mahasiswa Bimbingan:</h4>
         </div>
         <div class="page-content">
             <table>
@@ -101,15 +101,24 @@
                     <th rowspan="1">Tempat Praktek</th>
                     <th rowspan="1">Logbook</th>
                 </tr>
-                <tr>
-                    <td>Kadek Nesya Kurniadewi</td>
-                    <td>05311840000009</td>
-                    <td>Sedang KP</td>
-                    <td>Departemen Teknologi Informasi ITS</td>
-                    <td>
-                        <a type="button" href="../student/logbook.html" class="btn btn-outline-primary block">Show Logbook</a>
-                    </td>
-                </tr>
+                <?php foreach($data1 as $data){ ?>
+                    <tr>
+                        <td><?php echo htmlentities($data->nama) ?></td>
+                        <td><?php echo htmlentities($data->nrp) ?></td>
+                        <td><?php echo htmlentities($data->status) ?></td>
+                        <td><?php echo htmlentities($data->nama_perusahaan) ?></td>
+                        <td><a target="_blank" href="<?php echo base_url('lecture/logbook/'.htmlentities($data->id_siswa)) ?>"><div type="button" class="btn btn-outline-primary block">Show Logbook</div></a></td>
+                    </tr>
+                <?php } ?>
+                <?php foreach($data2 as $dataDua){ ?>
+                    <tr>
+                        <td><?php echo htmlentities($dataDua->nama) ?></td>
+                        <td><?php echo htmlentities($dataDua->nrp) ?></td>
+                        <td><?php echo htmlentities($dataDua->status) ?></td>
+                        <td><?php echo htmlentities($dataDua->nama_perusahaan) ?></td>
+                        <td><a target="_blank" href="<?php echo base_url('lecture/logbook/'.htmlentities($dataDua->id_siswa)) ?>"><div type="button" class="btn btn-outline-primary block">Show Logbook</div></a></td>
+                    </tr>
+                <?php } ?>
             </table>
         </div>
     </div>
