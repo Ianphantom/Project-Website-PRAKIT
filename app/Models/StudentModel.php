@@ -41,7 +41,7 @@ class StudentModel extends Model
     protected $afterDelete    = [];
 
     function getNamaSiswa($id= -1){
-        $query = "SELECT * FROM siswa INNER JOIN pengajuankp1 ON pengajuankp1.id_siswa=siswa.id_siswa OR pengajuankp1.id_partner=siswa.id_siswa";
+        $query = "SELECT * FROM siswa INNER JOIN pengajuankp1 ON pengajuankp1.id_siswa=siswa.id_siswa OR pengajuankp1.id_partner=siswa.id_siswa where pengajuankp1.id_siswa='".$id."' OR pengajuankp1.id_partner='".$id."'";
         $res = $this->db->query($query);
         return $res->getResult();
     }

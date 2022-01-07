@@ -9,6 +9,7 @@ use App\Models\KppartnerModel;
 use App\Models\PengajuanModel;
 use App\Models\LogbookModel;
 use App\Models\LaporanModel;
+use App\Models\NilaiModel;
 
 class StudentCtl extends BaseController
 {
