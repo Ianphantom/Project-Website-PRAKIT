@@ -63,6 +63,13 @@ class StudentCtl extends BaseController
         return view('student/form-kp', $data);
     }
 
+    public function uploadDokumenPengajuan(){
+        $data = [
+            'error' => '',
+        ];
+        return view('student/uploaddokumen', $data);
+    }
+
     public function pengumpulanLogbook(){
         $pengajuanModel = new PengajuanModel();
         $partnerModel = new KppartnerModel();
@@ -172,6 +179,40 @@ class StudentCtl extends BaseController
         
     }
 
+    public function uploadingDokumenPengajuan(){
+        $pengajuanModel = new PengajuanModel();
+
+        $datakp = $pengajuanModel->where('id_siswa', session()->get('loggedUser'))->first();
+        // echo $datakp['id_kp'];
+        helper(['form']);
+        $rules = [
+            'namaBerkas' => 'required',
+            'file' => 'uploaded[file]',
+        ];
+
+        if(!$this-> validate($rules)){
+            $error = $this->validator->getErrors();
+            $data = [
+                'error' => $error,
+            ];
+            return view('student/uploaddokumen', $data);
+        }
+
+        helper('date');
+        helper('text');
+        $dataBerkas = $this->request->getFile('file');
+		$fileName = session()->get('loggedUser'). '_' . now('Asia/Kolkata') .  '_' .  strtolower($this->request->getVar('namaBerkas')) . '_' . $dataBerkas->getRandomName();
+        
+        $inputData1 = [
+            'file_kp'                          => $fileName,
+            'status'                            => "Pengajuan KP"
+        ];
+        $pengajuanModel->update($datakp['id_kp'], $inputData1);
+        $dataBerkas->move('assets/pengajuankp/', $fileName);
+
+        return redirect()->to(base_url('student/home'))->with('success', 'Document Pengajuan KP has been Uploaded');
+    }
+
     public function insertingLogbook(){
         $pengajuanModel = new PengajuanModel();
         $partnerModel = new KppartnerModel();
@@ -264,7 +305,7 @@ class StudentCtl extends BaseController
             'file'                          => $fileName,
         ];
         $inserting = $laporanModel->save($inputData1);
-        return redirect()->to(base_url('student/home'))->with('success', 'Laporan KP has been Uploaded');;
+        return redirect()->to(base_url('student/home'))->with('success', 'Laporan KP has been Uploaded');
     }
 
     public function login()

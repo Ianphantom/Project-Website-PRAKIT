@@ -41,6 +41,7 @@ $routes->get('student/pengumpulan-berkas', 'StudentCtl::pengumpulanBerkas', ['fi
 $routes->get('student/profile', 'StudentCtl::userProfile', ['filter' => 'authStudent']);
 $routes->get('student/pengajuanKP', 'StudentCtl::userDaftarPengajuan', ['filter' => 'authStudent']);
 $routes->get('student/downloaddokumen', 'StudentCtl::downloadPengajuan', ['filter' => 'authStudent']);
+$routes->get('student/uploadpengajuan', 'StudentCtl::uploadDokumenPengajuan', ['filter' => 'authStudent']);
 $routes->get('student/logout', 'StudentCtl::logout', ['filter' => 'authStudent']);
 
 $routes->get('lecture/login', 'LectureCtl::login');

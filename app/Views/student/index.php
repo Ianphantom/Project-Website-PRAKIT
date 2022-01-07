@@ -240,7 +240,7 @@
                                         <div class="mb-0">
                                             <p class="text-danger"><strong>Anda belum melakukan upload dokumen pengajuan KP</strong></p>
                                             <a href="<?php echo base_url('student/downloaddokumen'); ?>" target="_blank" class="btn btn-info">Download Form Pengajuan KP</a>
-                                            <a href="#" class="btn btn-primary">Upload Dokumen KP</a>
+                                            <a href="<?php echo base_url('student/uploadpengajuan'); ?>" class="btn btn-primary">Upload Dokumen KP</a>
                                         </div>
                                     <?php }else if($dataKP['file_kp'] == null){ ?>
                                         <div class="mb-0">
@@ -249,7 +249,7 @@
                                         </div>
                                     <?php }else if($dataKP['file_kp'] != null){ ?>
                                         <div class="mb-0">
-                                            <a href="#" target="_blank"><?php echo $dataKP['file_kp'] ?></a>
+                                            <a href="<?php echo base_url('assets/pengajuankp/'.htmlentities($dataKP['file_kp'])) ?>" target="_blank"><?php echo $dataKP['file_kp'] ?></a>
                                         </div>
                                     <?php } ?>
                                 </div>
