@@ -145,6 +145,33 @@ class StudentCtl extends BaseController
         return view('student/pengajuan_kp');
     }
 
+    public function downloadPengajuan(){
+        $pengajuanModel = new PengajuanModel();
+        $userModel = new StudentModel();
+        $kpUser = $pengajuanModel->where('id_siswa', session()->get('loggedUser'))->first();
+        $currentUser = $userModel->where('id_siswa', session()->get('loggedUser'))->first();
+        if($kpUser['id_partner'] == null){
+            $data = [
+                'kp1' => $kpUser,
+                'user1' => $currentUser,
+            ];
+            return view('student/formpengajuan-kp-1', $data);
+        }else{
+            $partnerModel = new KppartnerModel();
+
+            $partner2 = $partnerModel->where('id_kp', $kpUser['id_kp'])->first();
+            $partnerUser = $userModel->where('id_siswa', $kpUser['id_partner'])->first();
+            $data = [
+                'kp1' => $kpUser,
+                'user1' => $currentUser,
+                'kp2' => $partner2,
+                'user2' => $partnerUser,
+            ];
+            return view('student/formpengajuan-kp', $data);
+        }
+        
+    }
+
     public function insertingLogbook(){
         $pengajuanModel = new PengajuanModel();
         $partnerModel = new KppartnerModel();
@@ -434,6 +461,6 @@ class StudentCtl extends BaseController
             }
 
         }
-        return redirect()->to(base_url('student/home'))->with('success', 'Pengajuan KP berhasil');
+        return redirect()->to(base_url('student/home'))->with('success', 'Penambahan data KP berhasil, selanjutnya lakukan upload Dokumen Pengajuan KP');
     }
 }

@@ -85,6 +85,9 @@ phpunit
 #-------------------------
 vendor/
 
+public/assets/laporankp
+public/assets/logbook
+
 #-------------------------
 # IDE / Development Files
 #-------------------------
@@ -124,4 +127,6 @@ nb-configuration.xml
 /results/
 /phpunit*.xml
 /.phpunit.*.cache
+
+
 

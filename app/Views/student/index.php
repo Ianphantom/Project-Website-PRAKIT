@@ -102,7 +102,7 @@
             
 <div>
     <nav class="navbar navbar-light">
-        <div class="container d-block">
+        <div class="d-block">
             <div class="logo">
                 <a onclick="goBack()"><i class="bi bi-chevron-left"></i></a> 
                 <script>
@@ -118,17 +118,17 @@
     </nav>
     
 
-<div class="container">
+<div>
     <div class="card mt-5">
         <div class="card-header text-muted">
             <h2 class="card-title text-center">Selamat Datang di PRAKIT!</h2>
                 <h3 class="card-header text-center">Website Monitoring Kerja Praktek Departemen Teknologi Informasi</h3>
         </div>
-        <div class="card mt-3">
+        <!-- <div class="card mt-3">
                 <div class="button text-center">
-                    <a href="<?php echo base_url('student/formkp'); ?>" class="btn btn-lg btn-success rounded-pill">Ajukan KP Sekarang</a>
+                    <a href="<?php echo base_url(); ?>" class="btn btn-lg btn-success rounded-pill">Ajukan KP Sekarang</a>
                 </div>
-        </div>
+        </div> -->
     </div>
 </div>  
 <?php if(!empty(session()->getFlashdata('success'))){?>
@@ -225,6 +225,33 @@
                                 <div class="d-flex align-items-left">
                                     <div class="mb-0"><p><?php echo htmlentities($dataKP['deskripsi_pekerjaan']) ?></p>
                                     </div>
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Dokumen Pengajuan KP</h4>
+                        </div>
+                        <div class="card-body px-4 py-3-5">
+                            <div class="row">
+                                <div class="d-flex align-items-left">
+                                    <?php if($dataKP['file_kp'] == null && $whoAmI['id_siswa'] == $dataKP['id_siswa']){ ?>
+                                        <div class="mb-0">
+                                            <p class="text-danger"><strong>Anda belum melakukan upload dokumen pengajuan KP</strong></p>
+                                            <a href="<?php echo base_url('student/downloaddokumen'); ?>" target="_blank" class="btn btn-info">Download Form Pengajuan KP</a>
+                                            <a href="#" class="btn btn-primary">Upload Dokumen KP</a>
+                                        </div>
+                                    <?php }else if($dataKP['file_kp'] == null){ ?>
+                                        <div class="mb-0">
+                                            <p class="text-danger"><strong>Anda belum melakukan upload dokumen pengajuan KP</strong></p>
+                                            <p><i>NB : ketua kelompok saja yang mengupload dokumen</i></p>
+                                        </div>
+                                    <?php }else if($dataKP['file_kp'] != null){ ?>
+                                        <div class="mb-0">
+                                            <a href="#" target="_blank"><?php echo $dataKP['file_kp'] ?></a>
+                                        </div>
+                                    <?php } ?>
                                 </div>
                             </div>                            
                         </div>
