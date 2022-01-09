@@ -98,4 +98,12 @@ class AdminCtl extends BaseController
         session()->set('roles', $user_role);
         return redirect()->to(base_url('admin/home'));
     }
+
+    public function logout(){
+        if(session()->has('loggedUser')){
+            session()->remove('loggedUser');
+            session()->destroy();
+            return redirect()->to(base_url());
+        }
+    }
 }
