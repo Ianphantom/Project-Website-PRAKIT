@@ -81,6 +81,12 @@ class StudentCtl extends BaseController
                 return view('student/logbook_null');
             }
         }
+
+        $onprogress = $pengajuanModel->where('id_siswa', session()->get('loggedUser'))->first();
+        if( $onprogress['status'] != "ON PROGRESS"){
+            return view('student/logbook_null');
+        }
+
         $data_logbook = $logbookModel->where('id_siswa', session()->get('loggedUser'))->findAll();
         $data = [
             'logbook' => $data_logbook,
@@ -104,6 +110,12 @@ class StudentCtl extends BaseController
         }else{
             $dataSiswaKP = $pengajuanModel->where('id_siswa', session()->get('loggedUser'))->first();
         }
+
+        $onprogress = $pengajuanModel->where('id_siswa', session()->get('loggedUser'))->first();
+        if( $onprogress['status'] != "ON PROGRESS"){
+            return view('student/logbook_null');
+        }
+        
         $whoAmI = $studentModel->where('id_siswa', session()->get('loggedUser'))->first();
         $dosenPembimbing = $lectureModel->where('id_dosen', $dataSiswaKP['id_dosen'])->first();
         $data = [

@@ -141,7 +141,7 @@
                     </td>
                     <td>
                         <?php if($kp['status'] == "ON PROGRESS"){ ?>
-                            <div type="button" class="btn btn-outline-primary block">Surat Pengantar KP</div>
+                            <a href="<?php echo base_url('assets/suratpengantar/'.htmlentities($kp['surat_pengantar'])) ?>" class="btn btn-outline-primary block">Surat Pengantar KP</a>
                         <?php }else{
                             echo htmlentities("-");
                         } ?>
