@@ -81,6 +81,10 @@
                 <td>Nomor Telepon</td>
                 <td>: <?php echo htmlentities($kp1['nomor_telepon']) ?></td>
             </tr>    
+            <tr>
+                <td>Dosen Pembimbing</td>
+                <td>: <?php echo htmlentities($dosen1['nama']) ?></td>
+            </tr> 
         </table>
     </div>
     <div class="data text-left mt-4">
@@ -104,7 +108,11 @@
             <tr>
                 <td>Nomor Telepon</td>
                 <td>: <?php echo htmlentities($kp2['nomor_telepon']) ?></td>
-            </tr>    
+            </tr>   
+            <tr>
+                <td>Dosen Pembimbing</td>
+                <td>: <?php echo htmlentities($dosen2['nama']) ?></td>
+            </tr>  
         </table>
     </div>
 

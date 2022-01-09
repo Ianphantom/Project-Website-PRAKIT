@@ -175,12 +175,16 @@ class StudentCtl extends BaseController
     public function downloadPengajuan(){
         $pengajuanModel = new PengajuanModel();
         $userModel = new StudentModel();
+        $dosenModel = new LectureModel();
         $kpUser = $pengajuanModel->where('id_siswa', session()->get('loggedUser'))->first();
         $currentUser = $userModel->where('id_siswa', session()->get('loggedUser'))->first();
+        $dosen1 = $dosenModel->where('id_dosen', $kpUser['id_dosen'])->first();
+
         if($kpUser['id_partner'] == null){
             $data = [
                 'kp1' => $kpUser,
                 'user1' => $currentUser,
+                'dosen1' => $dosen1,
             ];
             return view('student/formpengajuan-kp-1', $data);
         }else{
@@ -188,11 +192,15 @@ class StudentCtl extends BaseController
 
             $partner2 = $partnerModel->where('id_kp', $kpUser['id_kp'])->first();
             $partnerUser = $userModel->where('id_siswa', $kpUser['id_partner'])->first();
+            $dosen2 = $dosenModel->where('id_dosen', $partner2['id_dosen'])->first();
+
             $data = [
                 'kp1' => $kpUser,
                 'user1' => $currentUser,
                 'kp2' => $partner2,
                 'user2' => $partnerUser,
+                'dosen1' => $dosen1,
+                'dosen2' => $dosen2,
             ];
             return view('student/formpengajuan-kp', $data);
         }
