@@ -369,11 +369,11 @@ class StudentCtl extends BaseController
         $userModel = new StudentModel();
         $user = $userModel->where("email", $this->request->getVar('email'))->first();
         if(!$user){ 
-            session()->setFlashdata('fail', 'Your data email cannot be found!');
+            session()->setFlashdata('fail', 'Your data cannot be found!');
             return redirect()->to(base_url('student/login'))->withInput();
         }
         if($user['nrp'] != $this->request->getVar('nrp')){ 
-            session()->setFlashdata('fail', 'Your data NRP cannot be found!');
+            session()->setFlashdata('fail', 'Your data cannot be found!');
             return redirect()->to(base_url('student/login'))->withInput();
         }
         $verify = password_verify($this->request->getVar('password'), $user['password']);

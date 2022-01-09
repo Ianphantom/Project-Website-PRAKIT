@@ -167,12 +167,12 @@ class LectureCtl extends BaseController
         $userModel = new LectureModel();
         $user = $userModel->where("email", $this->request->getVar('email'))->first();
         if(!$user){ 
-            session()->setFlashdata('fail', 'Your data email cannot be found!');
+            session()->setFlashdata('fail', 'Your data cannot be found!');
             return redirect()->to(base_url('lecture/login'))->withInput();
         }
         $verify = password_verify($this->request->getVar('password'), $user['password']);
         if(!$verify){
-            session()->setFlashdata('fail', 'Your data password cannot be found!');
+            session()->setFlashdata('fail', 'Your data cannot be found!');
             return redirect()->to(base_url('lecture/login'))->withInput();
         }
 

@@ -45,4 +45,13 @@ class PengajuanModel extends Model
         $res = $this->db->query($query);
         return $res->getNumRows();
     }
+
+    function getDataPengajuan(){
+        $query = "SELECT *, siswa.nama as nama_siswa, dosen.nama as nama_dosen FROM pengajuankp1 
+                    INNER JOIN siswa ON pengajuankp1.id_siswa=siswa.id_siswa 
+                    INNER JOIN dosen ON dosen.id_dosen=pengajuankp1.id_dosen 
+                    WHERE pengajuankp1.status = 'Pengajuan KP';";
+        $res = $this->db->query($query);
+        return $res->getResult();
+    }
 }
