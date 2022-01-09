@@ -149,7 +149,27 @@ class StudentCtl extends BaseController
     }
 
     public function userDaftarPengajuan(){
-        return view('student/pengajuan_kp');
+        $pengajuanModel = new PengajuanModel();
+        $studentModel = new StudentModel();
+        $lectureModel = new LectureModel();
+        $partnerModel = new KppartnerModel();
+
+        $data_kp = $pengajuanModel->getPengajuanKP(session()->get('loggedUser'));
+        if($data_kp == 0){
+            $data_partner = $partnerModel->getPengajuanKP(session()->get('loggedUser'));
+            if($data_partner == 0){
+                return view('student/index_null');
+            }
+            $dataSiswaKP = $partnerModel->where('id_siswa', session()->get('loggedUser'))->first();
+        }else{
+            $dataSiswaKP = $pengajuanModel->where('id_siswa', session()->get('loggedUser'))->first();
+        }
+
+        $data_pengajuan = $pengajuanModel->where('id_kp', $dataSiswaKP['id_kp'])->first();
+        $data = [
+            'kp' => $data_pengajuan,
+        ];
+        return view('student/pengajuan_kp', $data);
     }
 
     public function downloadPengajuan(){
@@ -260,6 +280,18 @@ class StudentCtl extends BaseController
         ];
         $inserting = $logbookModel->save($inputData1);
         return redirect()->to(base_url('student/logbook'));
+    }
+
+    public function generatingLogbook(){
+        $studentModel = new StudentModel();
+        $logbookModel = new LogbookModel();
+        $siswaKp = $studentModel->getNamaSiswa(session()->get('loggedUser'));
+        $data_logbook = $logbookModel->where('id_siswa', session()->get('loggedUser'))->findAll();
+        $data = [
+            'siswaKp' => $siswaKp,
+            'data_logbook' => $data_logbook,
+        ];
+        return view('student/logbookreport', $data);
     }
 
     public function insertingLaporan(){

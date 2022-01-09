@@ -102,7 +102,7 @@
         
 <div>
     <nav class="navbar navbar-light">
-        <div class="container d-block">
+        <div class="d-block">
             <div class="logo">
                 <a onclick="goBack()"><i class="bi bi-chevron-left"></i></a> 
                 <script>
@@ -114,6 +114,9 @@
                     Logbook
                 </a>
             </div>
+        </div>
+        <div  class="ml-auto">
+            <a target="_blank" href="<?php echo base_url() ?>/studentctl/generatingLogbook" class="btn btn-danger">Generate LogBook</a>
         </div>
     </nav>
 </div>
@@ -172,7 +175,7 @@
     </form>
 </section>
 
-<div class="container">
+<div>
     <div class="card mt-5">
         <div class="page-content">
             <table>
