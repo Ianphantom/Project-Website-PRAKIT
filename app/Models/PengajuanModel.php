@@ -54,4 +54,21 @@ class PengajuanModel extends Model
         $res = $this->db->query($query);
         return $res->getResult();
     }
+
+    function getStatusKp1(){
+        $query = "SELECT *, c.nama as nama_dosen, b.nama as nama_siswa FROM pengajuankp1 as a 
+                    INNER JOIN siswa as b ON a.id_siswa=b.id_siswa 
+                    INNER JOIN dosen as c ON a.id_dosen=c.id_dosen;";
+        $res = $this->db->query($query);
+        return $res->getResult();
+    }
+
+    function getStatusPartner(){
+        $query = "SELECT a.*, b.*, c.*, d.status as status_kp, b.nama as nama_siswa, c.nama as nama_dosen FROM partnerkp as a 
+                    INNER JOIN siswa as b ON a.id_siswa=b.id_siswa 
+                    INNER JOIN dosen as c ON a.id_dosen=c.id_dosen 
+                    INNER JOIN pengajuankp1 as d ON a.id_kp=d.id_kp;";
+        $res = $this->db->query($query);
+        return $res->getResult();
+    }
 }

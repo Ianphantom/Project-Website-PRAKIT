@@ -63,14 +63,14 @@
         </div>
         <div id="main">
             <header class="mb-3">
-                <a href="#" class="burger-btn d-block d-xl-none">
+                <a href="../lecture/all-mahasiswa.html" class="burger-btn d-block d-xl-none">
                     <i class="bi bi-justify fs-3"></i>
                 </a>
             </header>
             
             <div>
                 <nav class="navbar navbar-light">
-                    <div class="d-block">
+                    <div class="container d-block">
                         <div class="logo">
                             <a onclick="goBack()"><i class="bi bi-chevron-left"></i></a> 
                             <script>
@@ -79,50 +79,96 @@
                                 }
                             </script>
                             <a class="navbar-brand ms-5" href="#">
-                                INBOX
+                                Mahasiswa KP
                             </a>
                         </div>
                     </div>
                 </nav>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" style="text-align: center;" placeholder="Search data" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                  </div>
 
-    <div>
+    <div class="container">
         <div class="card mt-5">
-        <?php if(!empty(session()->getFlashdata('success'))){?>
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <strong>Success! </strong><?php echo htmlentities(session()->getFlashdata('success')); ?>
-                </div>
-            <?php } ?>
-            <?php if(!empty(session()->getFlashdata('fail'))){?>
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong>Sorry! </strong><?php echo htmlentities(session()->getFlashdata('fail')); ?>
-                </div>
-        <?php } ?>
-            <div class="card-header text-muted">
-                <h4 class="card-title text-center">Mahasiswa yang Mengajukan Formulir KP :</h4>
-            </div>
             <div class="page-content">
-                <table class="text-center">
+                <table>
                     <tr>
-                        <th rowspan="1">No</th>
+                        <th rowspan="1">No.</th>
                         <th rowspan="1">Nama</th>
                         <th rowspan="1">NRP</th>
                         <th rowspan="1">Dosen Wali</th>
-                        <th rowspan="1">Surat Pengajuan KP</th>
+                        <th rowspan="1">Status (Melakukan pengajuan/Sudah Mendapatkan Surat Pengantar/Berkas sudah Lengkap)</th>
+                        <th rowspan="1">Berkas Akhir</th>
                     </tr>
                     <?php
                         $i = 0;  
-                        foreach ($data_pengajuan as $e) : $i++;?>
+                        foreach ($data1 as $e) : $i++;?>
                         <tr>
                             <td><?php echo htmlentities($i) ?></td>
                             <td><?php echo htmlentities($e->nama_siswa) ?></td>
                             <td><?php echo htmlentities($e->nrp) ?></td>
                             <td><?php echo htmlentities($e->nama_dosen) ?></td>
                             <td>
-                                <a target="_blank" href="<?php echo base_url('assets/pengajuankp/'.htmlentities($e->file_kp)) ?>" class="btn btn-outline-primary block">Show</a>
-                                <a href="<?php echo base_url('admin/suratpengantarkp/'.htmlentities($e->id_kp)) ?>" class="btn btn-outline-primary block">Send SP</a>
+                                <?php 
+                                    if($e->status == "KP Submission" || $e->status == "Pengajuan KP"){
+                                        echo "Melakukan pengajuan";
+                                    }else if($e->status == "ON PROGRESS"){
+                                        echo "Sudah Mendapatkan Surat Pengantar";
+                                    }else if($e->status == "FINISHED"){
+                                        echo "Berkas Sudah Lengkap";
+                                    }
+                                ?>
+                            </td>
                             <td>
+                                <?php 
+                                    if($e->status == "FINISHED"){ ?>
+                                        <a type="button" href="#" class="btn btn-outline-primary block">Show</a>  
+                                <?php }else{
+                                    echo "-";
+                                } ?>
+                            </td>
                         </tr>
                     <?php endforeach ?>
+                    <?php
+                        $i = 0;  
+                        foreach ($data2 as $e) : $i++;?>
+                        <tr>
+                            <td><?php echo htmlentities($i) ?></td>
+                            <td><?php echo htmlentities($e->nama_siswa) ?></td>
+                            <td><?php echo htmlentities($e->nrp) ?></td>
+                            <td><?php echo htmlentities($e->nama_dosen) ?></td>
+                            <td>
+                                <?php 
+                                    if($e->status_kp == "KP Submission" || $e->status_kp == "Pengajuan KP"){
+                                        echo "Melakukan pengajuan";
+                                    }else if($e->status_kp == "ON PROGRESS"){
+                                        echo "Sudah Mendapatkan Surat Pengantar";
+                                    }else if($e->status_kp == "FINISHED"){
+                                        echo "Berkas Sudah Lengkap";
+                                    }
+                                ?>
+                            </td>
+                            <td>
+                                <?php 
+                                    if($e->status_kp == "FINISHED"){ ?>
+                                        <a type="button" href="#" class="btn btn-outline-primary block">Show</a>  
+                                <?php }else{
+                                    echo "-";
+                                } ?>
+                            </td>
+                        </tr>
+                    <?php endforeach ?>
+                    <!-- <tr>
+                        <td>2</td>
+                        <td>Desya</td>
+                        <td>05311840000046</td>
+                        <td>M. Husni</td>
+                        <td>Sudah Mendapatkan surat pengantar</td>
+                        <td>
+                            <a type="button" href="../ITAdmin/berkas.html" class="btn btn-outline-primary block">Show</a>
+                        </td>
+                    </tr> -->
                 </table>
             </div>
         </div>
@@ -138,7 +184,7 @@
         <span>2021 &copy; Teknologi Informasi</span>
         </div>
     </div>
-</footer>    
+</footer>     
     
 <script src="../assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 <script src="../assets/js/bootstrap.bundle.min.js"></script>
@@ -150,11 +196,3 @@
 </body>
 
 </html>
-
-
-
-
-
-
-                
-        

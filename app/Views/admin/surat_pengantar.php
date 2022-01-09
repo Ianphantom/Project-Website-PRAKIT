@@ -45,7 +45,7 @@
             </li>
             
             <li class="sidebar-item">
-                <a href="../ITAdmin/surat-pengajuan-mhs.html" class='sidebar-link'>
+                <a href="<?php echo base_url('admin/suratpengajuanmahasiswa'); ?>" class='sidebar-link'>
                     <i class="bi bi-stack"></i>
                     <span>Mahasiswa KP</span>
                 </a>

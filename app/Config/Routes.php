@@ -56,6 +56,7 @@ $routes->get('admin/login', 'AdminCtl::login');
 $routes->get('admin/home', 'AdminCtl::index', ['filter' => 'authAdmin']);
 $routes->get('admin/suratpengantarkp/(:any)', 'AdminCtl::suratpengantar/$1', ['filter' => 'authAdmin']);
 $routes->get('admin/logout', 'AdminCtl::logout', ['filter' => 'authAdmin']);
+$routes->get('admin/suratpengajuanmahasiswa', 'AdminCtl::statuspengajuanmhs', ['filter' => 'authAdmin']);
 
 
 

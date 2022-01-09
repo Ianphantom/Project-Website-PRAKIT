@@ -63,6 +63,17 @@ class AdminCtl extends BaseController
         return redirect()->to(base_url('admin/home'))->with('success', 'Document Surat Pengantar KP has been Uploaded');
     }
 
+    public function statuspengajuanmhs(){
+        $pengajuanModel = new PengajuanModel();
+        $data_mahasiswa1 = $pengajuanModel->getStatusKp1();
+        $data_mahasiswa2 = $pengajuanModel->getStatusPartner();
+        $data = [
+            'data1' => $data_mahasiswa1,
+            'data2' => $data_mahasiswa2,
+        ];
+        return view('admin/surat-pengajuan-mhs', $data);
+    }
+
     public function login(){
         return view('admin/auth-login-admin');
     }
