@@ -128,17 +128,31 @@
                     <th rowspan="1">Cetak Surat</th>
                 </tr>
                 <tr>
-                    <td>01-01-2022</td>
+                    <td><?php echo htmlentities($kp['tanggal_pengajuan']) ?></td>
                     <td>Pengajuan Kerja Praktek</td>
-                    <td>DISETUJUI</td>
-                    <td><div type="button" class="btn btn-outline-primary block">Surat Pengantar</div></td>
+                    <td>
+                        <?php if($kp['status'] == "Pengajuan KP"){
+                            echo htmlentities('DALAM PROSES');
+                        }else if($kp['status'] == "KP Submission"){
+                            echo htmlentities('BELUM UPLOAD BERKAS');
+                        }else if($kp['status'] == "ON PROGRESS"){
+                            echo htmlentities('DISETUJUI');
+                        } ?>
+                    </td>
+                    <td>
+                        <?php if($kp['status'] == "ON PROGRESS"){ ?>
+                            <div type="button" class="btn btn-outline-primary block">Surat Pengantar KP</div>
+                        <?php }else{
+                            echo htmlentities("-");
+                        } ?>
+                    </td>
                 </tr>
-                <tr>
+                <!-- <tr>
                     <td>31-12-2021</td>
                     <td>Pengajuan Alih Kredit</td>
                     <td>DALAM PROSES</td>
                     <td> - </td>
-                </tr>
+                </tr> -->
             </table>
         </div>
     </div>
