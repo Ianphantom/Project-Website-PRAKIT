@@ -81,6 +81,16 @@
 
     <div>
         <div class="card mt-5">
+        <?php if(!empty(session()->getFlashdata('success'))){?>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Success! </strong><?php echo htmlentities(session()->getFlashdata('success')); ?>
+                </div>
+            <?php } ?>
+            <?php if(!empty(session()->getFlashdata('fail'))){?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Sorry! </strong><?php echo htmlentities(session()->getFlashdata('fail')); ?>
+                </div>
+        <?php } ?>
             <div class="card-header text-muted">
                 <h4 class="card-title text-center">Mahasiswa yang Mengajukan Formulir KP :</h4>
             </div>
@@ -103,7 +113,7 @@
                             <td><?php echo htmlentities($e->nama_dosen) ?></td>
                             <td>
                                 <a target="_blank" href="<?php echo base_url('assets/pengajuankp/'.htmlentities($e->file_kp)) ?>" class="btn btn-outline-primary block">Show</a>
-                                <a type="button" href="#" class="btn btn-outline-primary block">Send SP</a>
+                                <a href="<?php echo base_url('admin/suratpengantarkp/'.htmlentities($e->id_kp)) ?>" class="btn btn-outline-primary block">Send SP</a>
                             <td>
                         </tr>
                     <?php endforeach ?>

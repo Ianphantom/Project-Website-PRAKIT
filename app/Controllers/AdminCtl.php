@@ -20,6 +20,49 @@ class AdminCtl extends BaseController
         return view('admin/dashboard', $data);
     }
 
+    public function suratpengantar($seg1 = false){
+        $data = [
+            'id_kp' => $seg1,
+            'error' => '',
+        ];
+        return view('admin/surat_pengantar', $data);
+    }
+
+    public function uploadingSuratPengantar($seg1 = false){
+        $pengajuanModel = new PengajuanModel();
+
+        $datakp = $pengajuanModel->where('id_kp', $seg1)->first();
+        // echo $datakp['id_kp'];
+        helper(['form']);
+        $rules = [
+            'namaBerkas' => 'required',
+            'file' => 'uploaded[file]',
+        ];
+
+        if(!$this-> validate($rules)){
+            $error = $this->validator->getErrors();
+            $data = [
+                'error' => $error,
+                'id_kp' => $seg1,
+            ];
+            return view('admin/surat_pengantar', $data);
+        }
+
+        helper('date');
+        helper('text');
+        $dataBerkas = $this->request->getFile('file');
+		$fileName = session()->get('loggedUser'). '_' . now('Asia/Kolkata') .  '_' .  strtolower($this->request->getVar('namaBerkas')) . '_' . $dataBerkas->getRandomName();
+        
+        $inputData1 = [
+            'surat_pengantar'                          => $fileName,
+            'status'                            => "ON PROGRESS"
+        ];
+        $pengajuanModel->update($datakp['id_kp'], $inputData1);
+        $dataBerkas->move('assets/suratpengantar/', $fileName);
+
+        return redirect()->to(base_url('admin/home'))->with('success', 'Document Surat Pengantar KP has been Uploaded');
+    }
+
     public function login(){
         return view('admin/auth-login-admin');
     }

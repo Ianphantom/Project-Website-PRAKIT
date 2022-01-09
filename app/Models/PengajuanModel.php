@@ -14,7 +14,7 @@ class PengajuanModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id_kp', 'id_siswa', 'sks','alamat','nomor_telepon','id_dosen','nama_perusahaan','alamat_perusahaan','telepon_perusahaan','telepon_perusahaan','wakil_perusahaan','deskripsi_pekerjaan','tanggal_pelaksanaan','tanggal_selesai','profil_perusahaan','id_partner', 'status', 'tanggal_pengajuan','file_kp'];
+    protected $allowedFields    = ['id_kp', 'id_siswa', 'sks','alamat','nomor_telepon','id_dosen','nama_perusahaan','alamat_perusahaan','telepon_perusahaan','telepon_perusahaan','wakil_perusahaan','deskripsi_pekerjaan','tanggal_pelaksanaan','tanggal_selesai','profil_perusahaan','id_partner', 'status', 'tanggal_pengajuan','file_kp', 'surat_pengantar'];
 
     // Dates
     protected $useTimestamps = false;

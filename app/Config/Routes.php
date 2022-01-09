@@ -54,6 +54,7 @@ $routes->get('lecture/updatenilai/(:any)/(:any)', 'LectureCtl::updateNilai/$1/$2
 
 $routes->get('admin/login', 'AdminCtl::login');
 $routes->get('admin/home', 'AdminCtl::index', ['filter' => 'authAdmin']);
+$routes->get('admin/suratpengantarkp/(:any)', 'AdminCtl::suratpengantar/$1', ['filter' => 'authAdmin']);
 
 
 
