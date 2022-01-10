@@ -51,6 +51,8 @@ $routes->get('lecture/mahasiswakp', 'LectureCtl::mahasiswakp', ['filter' => 'aut
 $routes->get('lecture/penilaian-mhs', 'LectureCtl::penilaianMahasiswa', ['filter' => 'authLecture']);
 $routes->get('lecture/logbook/(:any)', 'LectureCtl::showLogbook/$1' , ['filter' => 'authLecture']);
 $routes->get('lecture/updatenilai/(:any)/(:any)', 'LectureCtl::updateNilai/$1/$2' , ['filter' => 'authLecture']);
+$routes->get('lecture/logout', 'LectureCtl::logout', ['filter' => 'authLecture']);
+
 
 $routes->get('admin/login', 'AdminCtl::login');
 $routes->get('admin/home', 'AdminCtl::index', ['filter' => 'authAdmin']);
