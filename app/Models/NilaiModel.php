@@ -14,7 +14,7 @@ class NilaiModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id_nilai', 'id_kp', 'id_siswa', 'nilai'];
+    protected $allowedFields    = ['id_nilai', 'id_kp', 'id_siswa', 'nilai', 'berkas_nilai'];
 
     // Dates
     protected $useTimestamps = false;

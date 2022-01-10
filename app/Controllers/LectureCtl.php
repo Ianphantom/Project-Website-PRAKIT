@@ -81,7 +81,7 @@ class LectureCtl extends BaseController
 
         $dataSiswa = $studentModel->where('id_siswa', $seg1)->first();
         $dataNilai = $nilaiModel->where('id_nilai', $seg2)->first();
-        session()->setTempdata('id_nilai', $seg2, 3600);
+        session()->set('id_nilai', $seg2);
         $data = [
             'userid'    => $seg1,
             'id_nilai'     => $seg2,
@@ -94,10 +94,23 @@ class LectureCtl extends BaseController
     public function updatingNilai(){
         $nilaiModel = new NilaiModel();
 
+        helper(['form']);
+        $rules = [
+            'nilai' => 'required|numeric',
+            'file' => 'uploaded[file]',
+        ];
+
+        helper('date');
+        helper('text');
+        $dataBerkas = $this->request->getFile('file');
+		$fileName = session()->get('loggedUser'). '_' . now('Asia/Kolkata') .  '_' .  strtolower($this->request->getVar('namaBerkas')) . '_' . $dataBerkas->getRandomName();
+
         $inputNilai1 = [
             'nilai'  => $this->request->getVar('nilai'),
+            'berkas_nilai' => $fileName,
         ];
-        $nilaiModel->update(session()->getTempdata('id_nilai'), $inputNilai1);
+        $nilaiModel->update(session()->get('id_nilai'), $inputNilai1);
+        $dataBerkas->move('assets/nilaikp/', $fileName);
         $lectureModel = new LectureModel();
         $dataDosen = $lectureModel->where('id_dosen', session()->get('loggedUser'))->first();
         
@@ -109,8 +122,7 @@ class LectureCtl extends BaseController
             'data1' => $data_kp1,
             'data2' => $data_kp2,
         ];
-        session()->removeTempdata('id_nilai');
-        return view('lecture/penilaian-mhs', $data);
+        session()->remove('id_nilai');
         return redirect()->to(base_url('lecture/penilaian-mhs'))->with('success', 'Mark Updated');
     }
 

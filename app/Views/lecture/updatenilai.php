@@ -93,7 +93,7 @@
             <h4 class="card-title text-center">Update Nilai:</h4>
         </div>
         <div class="page-content py-3 px-3">
-            <form id="laporanForm"  role="form" action="<?php echo base_url() ?>/lecturectl/updatingNilai" method="post">
+            <form id="laporanForm"  role="form" action="<?php echo base_url() ?>/lecturectl/updatingNilai" method="post" enctype='multipart/form-data'>
                 <div>
                     <label class="form-label"> Nama</label>
                     <input type="text" class="form-control" name="nama" disabled value="<?php echo htmlentities($dataSiswa['nama']) ?>" required>
@@ -104,8 +104,13 @@
                 </div>
                 <br>
                 <section id="input-file-browser">
-                    <label class="form-label"> Nilai</label>
+                    <label class="form-label"> Total Score</label>
                     <input type="text" class="form-control" name="nilai" value="<?php echo htmlentities($dataNilai['nilai']) ?>"  required>
+                </section>
+                <br>
+                <section id="input-file-browser">
+                    <label class="form-label"> Berkas Penilaian</label>
+                    <input class="form-control" type="file" name="file" id="formFile" required>
                 </section>
                 <br>
                 <input type="submit" class="btn btn-primary ml-1">

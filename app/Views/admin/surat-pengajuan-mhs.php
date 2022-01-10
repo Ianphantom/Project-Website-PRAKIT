@@ -37,14 +37,14 @@
         <ul class="menu">
             <li class="sidebar-title">Menu</li>
             
-            <li class="sidebar-item active">
+            <li class="sidebar-item">
                 <a href="<?php echo base_url('admin/home'); ?>" class='sidebar-link'>
                     <i class="bi bi-grid-fill"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
             
-            <li class="sidebar-item">
+            <li class="sidebar-item active">
                 <a href="<?php echo base_url('admin/suratpengajuanmahasiswa'); ?>" class='sidebar-link'>
                     <i class="bi bi-stack"></i>
                     <span>Mahasiswa KP</span>
