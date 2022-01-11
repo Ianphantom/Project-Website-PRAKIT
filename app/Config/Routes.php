@@ -62,6 +62,7 @@ $routes->get('admin/logout', 'AdminCtl::logout', ['filter' => 'authAdmin']);
 $routes->get('admin/suratpengajuanmahasiswa', 'AdminCtl::statuspengajuanmhs', ['filter' => 'authAdmin']);
 
 $routes->get('external/home', 'ExternalCtl::index');
+$routes->get('external/tambah', 'ExternalCtl::tambahLowongan');
 
 
 

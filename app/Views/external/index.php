@@ -72,93 +72,13 @@
 </div>
 
 <div class="page-content">
-    <div class="container">
+    <div>
         <div class="card mt-5">
             <div class="button text-center">
-                <button type="button" class="btn btn-primary ml-1" data-bs-toggle="modal" data-bs-target="#exampleModalCenter"> Upload Berkas </button>
-                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalCenterTitle">Tambahkan Info KP</h5>
-                                    <button type="button" class="close" data-bs-dismiss="modal"
-                                        aria-label="Close">
-                                        <i data-feather="x"></i>
-                                    </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form>
-                                            <div>
-                                                <label class="form-label">Nama Perusahaan</label>
-                                                <input type="text" class="form-control" required>
-                                            </div>
-                                            
-                                            <div>
-                                                <label class="form-label">Alamat Perusahaan</label>
-                                                <input type="text" class="form-control" required>
-                                            </div>
-                                            
-                                            <div>
-                                                <label class="form-label">CP</label>
-                                                <input type="text" class="form-control" required>
-                                            </div>
-                                            
-                                            <div>
-                                                <label class="form-label">Posisi KP</label>
-                                                <textarea class="form-control" required></textarea>
-                                            </div>
-                                            <div>
-                                                <label class="form-label">Persyaratan</label>
-                                                <textarea class="form-control" required></textarea>
-                                            </div>
-                                        </form>
-                                        <label class="form-label">Input Pmflet/Logo</label>
-                                        <section id="input-file-browser">
-                                            <input class="form-control" type="file" id="formFile" required>
-                                        </section>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-light-secondary"
-                                            data-bs-dismiss="modal">
-                                                <i class="bx bx-x d-block d-sm-none"></i>
-                                                <span class="d-none d-sm-block">Close</span>
-                                        </button>
-                                        <button type="submit" class="btn btn-primary ml-1" data-bs-dismiss="modal">
-                                            <i class="bx bx-check d-block d-sm-none"></i>
-                                            <span class="d-none d-sm-block">Submit</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <a type="button" class="btn btn-primary ml-1" href="<?php echo base_url('external/tambah') ?>"> Tambahkan Info Lowongan KP </a>
             </div>
         </div>     
-
-<div class="row">
-    <div class="col-sm-6">
-        <div class="card">
-        <div class="card-body">
-            <h3 class="card-title">PT Telkom</h3>
-            <p class="card-text">Membutuhkan mahasiswa KP di bagian web developer</p>
-            <a href="../External/detail.html" class="btn btn-primary">Tampilkan Detail</a>
-        </div>
-        </div>
     </div>
-    <div class="col-sm-6">
-        <div class="card">
-        <div class="card-body">
-            <h3 class="card-title">Microsoft</h3>
-            <p class="card-text">Membutuhkan mahasiswa KP di bagian web developer</p>
-            <a href="../External/detail.html" class="btn btn-primary">Tampilkan Detail</a>
-        </div>
-        </div>
-    </div>
-</div>
-
-<div class="button text-center">
-    <a href="profile.html" class="btn btn-lg btn-success rounded-pill">Submit</a>
 </div>
 
     <footer class="sticky-footer">
