@@ -61,6 +61,8 @@ $routes->get('admin/showberkas/(:any)/(:any)', 'AdminCtl::showberkas/$1/$2', ['f
 $routes->get('admin/logout', 'AdminCtl::logout', ['filter' => 'authAdmin']);
 $routes->get('admin/suratpengajuanmahasiswa', 'AdminCtl::statuspengajuanmhs', ['filter' => 'authAdmin']);
 
+$routes->get('external/home', 'ExternalCtl::index');
+
 
 
 

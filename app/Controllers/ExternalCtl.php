@@ -8,6 +8,6 @@ class ExternalCtl extends BaseController
 {
     public function index()
     {
-        //
+        return view('external/index');
     }
 }
