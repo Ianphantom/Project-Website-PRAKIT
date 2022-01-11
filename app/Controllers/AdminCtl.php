@@ -7,6 +7,7 @@ use App\Models\AdminModel;
 use App\Models\PengajuanModel;
 use App\Models\StudentModel;
 use App\Models\LectureModel;
+use App\Models\LaporanModel;
 
 class AdminCtl extends BaseController
 {
@@ -76,6 +77,13 @@ class AdminCtl extends BaseController
 
     public function login(){
         return view('admin/auth-login-admin');
+    }
+
+    public function showberkas($seg1 = false, $seg2 = false){
+        $berkas = new LaporanModel();
+        $whereQuery = "id_kp='".$seg1."' AND id_siswa='".$seg2."'";
+		$data = $berkas->where($whereQuery)->first();
+		return $this->response->download('assets/laporankp/' . $data['file'], null);
     }
 
     public function loggingAccount()

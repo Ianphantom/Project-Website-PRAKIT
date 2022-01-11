@@ -123,7 +123,7 @@
                             <td>
                                 <?php 
                                     if($e->status == "FINISHED"){ ?>
-                                        <a type="button" href="#" class="btn btn-outline-primary block">Show</a>  
+                                        <a type="button" href="<?php echo base_url('admin/showberkas/'.$e->id_kp.'/'.$e->id_siswa) ?>" class="btn btn-outline-primary block">Show</a>  
                                 <?php }else{
                                     echo "-";
                                 } ?>
@@ -152,7 +152,7 @@
                             <td>
                                 <?php 
                                     if($e->status_kp == "FINISHED"){ ?>
-                                        <a type="button" href="#" class="btn btn-outline-primary block">Show</a>  
+                                        <a type="button" href="<?php echo base_url('admin/showberkas/'.$e->id_kp.'/'.$e->id_siswa) ?>" class="btn btn-outline-primary block">Show</a>  
                                 <?php }else{
                                     echo "-";
                                 } ?>

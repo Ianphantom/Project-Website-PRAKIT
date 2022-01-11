@@ -81,8 +81,8 @@ class StudentCtl extends BaseController
                 return view('student/logbook_null');
             }
         }
-
-        $onprogress = $pengajuanModel->where('id_siswa', session()->get('loggedUser'))->first();
+        $whereQuery="id_siswa='".session()->get('loggedUser')."' OR id_partner='".session()->get('loggedUser')."'";
+        $onprogress = $pengajuanModel->where($whereQuery)->first();
         if( $onprogress['status'] != "ON PROGRESS"){
             return view('student/logbook_null');
         }
@@ -111,7 +111,8 @@ class StudentCtl extends BaseController
             $dataSiswaKP = $pengajuanModel->where('id_siswa', session()->get('loggedUser'))->first();
         }
 
-        $onprogress = $pengajuanModel->where('id_siswa', session()->get('loggedUser'))->first();
+        $whereQuery="id_siswa='".session()->get('loggedUser')."' OR id_partner='".session()->get('loggedUser')."'";
+        $onprogress = $pengajuanModel->where($whereQuery)->first();
         if( $onprogress['status'] != "ON PROGRESS"){
             return view('student/logbook_null');
         }
@@ -357,6 +358,10 @@ class StudentCtl extends BaseController
             'file'                          => $fileName,
         ];
         $inserting = $laporanModel->save($inputData1);
+        $inputData2 = [
+            'status'              => 'FINISHED',
+        ];
+        $pengajuanModel->update($dataSiswaKP['id_kp'], $inputData2);
         return redirect()->to(base_url('student/home'))->with('success', 'Laporan KP has been Uploaded');
     }
 
