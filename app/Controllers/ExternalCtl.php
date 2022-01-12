@@ -12,7 +12,15 @@ class ExternalCtl extends BaseController
 {
     public function index()
     {
-        return view('external/index');
+        $lowonganModel = new LowonganModel();
+        $berkasModel = new BerkasModel();
+        $persyaratanModel = new PersyaratanModel();
+        
+        $dataLowongan = $lowonganModel->findAll();
+        $data = [
+            'dataLowongan' => $dataLowongan,
+        ];
+        return view('external/index', $data);
     }
 
     public function tambahLowongan(){
@@ -88,13 +96,6 @@ class ExternalCtl extends BaseController
                 $berkasModel->insert($inputData2);
             }
         }  
-        // $inputData = [
-        //     'email'      => $this->request->getVar('email'),
-        //     'password'      => password_hash($this->request->getVar('password'), PASSWORD_BCRYPT),
-        //     'nama'  => $this->request->getVar('nama'),
-        // ];
-        // $accountModel = new LectureModel();
-        // $registering = $accountModel->save($inputData);
         return redirect()->to(base_url('external/home'));
     }
 }

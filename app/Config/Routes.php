@@ -63,6 +63,7 @@ $routes->get('admin/suratpengajuanmahasiswa', 'AdminCtl::statuspengajuanmhs', ['
 
 $routes->get('external/home', 'ExternalCtl::index');
 $routes->get('external/tambah', 'ExternalCtl::tambahLowongan');
+$routes->get('external/detail/(:any)', 'ExternalCtl::showDetail/$1');
 
 
 

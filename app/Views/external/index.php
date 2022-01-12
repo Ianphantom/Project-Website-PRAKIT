@@ -81,6 +81,20 @@
     </div>
 </div>
 
+<div class="row">
+    <?php foreach ($dataLowongan as $e) : ?>
+        <div class="col-sm-6">
+        <div class="card">
+        <div class="card-body">
+            <h3 class="card-title"><?php echo htmlentities($e['nama_perusahaan']) ?></h3>
+            <p class="card-text"><?php echo htmlentities($e['posisi_kp']) ?></p>
+            <a href="<?php echo base_url('external/detail/'.$e['id_lowongan']) ?>" class="btn btn-primary">Tampilkan Detail</a>
+        </div>
+        </div>
+    </div>
+    <?php endforeach ?>
+</div>
+
     <footer class="sticky-footer">
         <div class="container my-auto">
             <div class="copyright text-center my-auto">
