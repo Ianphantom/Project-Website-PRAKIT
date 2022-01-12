@@ -30,6 +30,23 @@ class ExternalCtl extends BaseController
         return view('external/tambah', $data);
     }
 
+    public function showDetail($seg1 = false){
+        $lowonganModel = new LowonganModel();
+        $berkasModel = new BerkasModel();
+        $persyaratanModel = new PersyaratanModel();
+
+        $dataLowongan = $lowonganModel->where('id_lowongan', $seg1)->first();
+        $berkas = $berkasModel->where('id_lowongan', $seg1)->findAll();
+        $persyaratan = $persyaratanModel->where('id_lowongan', $seg1)->findAll();
+        
+        $data = [
+            'lowongan' => $dataLowongan,
+            'berkas' => $berkas,
+            'persyaratan' => $persyaratan,
+        ];
+        return view('external/detail', $data);
+    }
+
     public function insertingLowongan(){
         helper(['form']);
         $rules = [
