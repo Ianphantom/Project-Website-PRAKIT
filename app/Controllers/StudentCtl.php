@@ -10,6 +10,9 @@ use App\Models\PengajuanModel;
 use App\Models\LogbookModel;
 use App\Models\LaporanModel;
 use App\Models\NilaiModel;
+use App\Models\LowonganModel;
+use App\Models\BerkasModel;
+use App\Models\PersyaratanModel;
 
 class StudentCtl extends BaseController
 {
@@ -19,12 +22,22 @@ class StudentCtl extends BaseController
         $studentModel = new StudentModel();
         $lectureModel = new LectureModel();
         $partnerModel = new KppartnerModel();
+        
+        // data lowongan perusahaan
+        $lowonganModel = new LowonganModel();
+        $berkasModel = new BerkasModel();
+        $persyaratanModel = new PersyaratanModel();
+        
+        $dataLowongan = $lowonganModel->findAll();
 
         $data_kp = $pengajuanModel->getPengajuanKP(session()->get('loggedUser'));
         if($data_kp == 0){
             $data_partner = $partnerModel->getPengajuanKP(session()->get('loggedUser'));
             if($data_partner == 0){
-                return view('student/index_null');
+                $data = [
+                    'dataLowongan' => $dataLowongan,
+                ];
+                return view('student/index_null', $data);
             }
             $dataSiswaKP = $partnerModel->where('id_siswa', session()->get('loggedUser'))->first();
         }else{
@@ -43,6 +56,7 @@ class StudentCtl extends BaseController
             'dosen' => $dosenPembimbing,
             'siswaKp' => $siswaKp,
             'whoAmI' => $whoAmI,
+            'dataLowongan' => $dataLowongan,
         ]; 
         return view('student/index', $data);
     }
@@ -561,4 +575,6 @@ class StudentCtl extends BaseController
         }
         return redirect()->to(base_url('student/home'))->with('success', 'Penambahan data KP berhasil, selanjutnya lakukan upload Dokumen Pengajuan KP');
     }
+
+    
 }

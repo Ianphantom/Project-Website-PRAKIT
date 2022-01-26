@@ -137,6 +137,21 @@
     <strong>Sorry! </strong> You still dont have Pengajuan KP data
 </div>
 
+<h3 class="card-title text-left">Lowongan KP tersedia</h3><br>
+<div class="row">
+    <?php foreach ($dataLowongan as $e) : ?>
+        <div class="col-sm-6">
+        <div class="card">
+        <div class="card-body">
+            <h4 class="text-primary"><?php echo htmlentities($e['nama_perusahaan']) ?></h4>
+            <p class="card-text"><?php echo htmlentities($e['posisi_kp']) ?></p>
+            <a href="<?php echo base_url('external/detail/'.$e['id_lowongan']) ?>" class="btn btn-primary">Tampilkan Detail</a>
+        </div>
+        </div>
+    </div>
+    <?php endforeach ?>
+</div>
+
 <footer class="sticky-footer fixed-bottom">
     <div class="container my-auto">
         <div class="copyright text-center my-auto">
