@@ -42,13 +42,6 @@
                 </a>
             </li>
             
-            <li class="sidebar-item ">
-                <a href="<?php echo base_url('student/logbook'); ?>" class='sidebar-link'>
-                    <i class="bi bi-stack"></i>
-                    <span>Logbook</span>
-                </a>
-            </li>
-            
             <li class="sidebar-item  has-sub ">
                 <a href="<?php echo base_url('student/pengumpulan-berkas'); ?>" class='sidebar-link'>
                     <i class="bi bi-collection-fill"></i>
@@ -71,7 +64,7 @@
                         <a href="<?php echo base_url('student/profile'); ?>">Profile</a>
                     </li>
                     <li class="submenu-item ">
-                        <a href="<?php echo base_url('student/pengajuanKP'); ?>">Pengajuan KP</a>
+                        <a href="<?php echo base_url('student/pengajuanKP'); ?>">Pengajuan Alih Kredit</a>
                     </li>
                     <li class="submenu-item ">
                         <a href="<?php echo base_url('student/dokumen'); ?>">Unduh Dokumen</a>

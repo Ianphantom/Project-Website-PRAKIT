@@ -61,7 +61,7 @@
                         <a href="<?php echo base_url('student/profile'); ?>">Profile</a>
                     </li>
                     <li class="submenu-item ">
-                        <a href="<?php echo base_url('student/pengajuanKP'); ?>">Pengajuan KP</a>
+                        <a href="<?php echo base_url('student/pengajuanKP'); ?>">Pengajuan Alih Kredit</a>
                     </li>
                     <li class="submenu-item ">
                         <a href="<?php echo base_url('student/dokumen'); ?>">Unduh Dokumen</a>
