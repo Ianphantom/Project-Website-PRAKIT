@@ -345,6 +345,23 @@ class StudentCtl extends BaseController
         
     }
 
+    public function downloadPengajuanAlihKredit(){
+        $pengajuanModel = new PengajuanModel();
+        $userModel = new StudentModel();
+        $dosenModel = new LectureModel();
+        $alihKredit = new AlihKreditModel();
+        $kpUser = $alihKredit->where('id_siswa', session()->get('loggedUser'))->first();
+        $currentUser = $userModel->where('id_siswa', session()->get('loggedUser'))->first();
+        $dosen1 = $dosenModel->where('id_dosen', $kpUser['id_dosen'])->first();
+
+        $data = [
+            'kp1' => $kpUser,
+            'user1' => $currentUser,
+            'dosen1' => $dosen1,
+        ];
+        return view('student/formpengajuan-kp-1', $data);
+    }
+
     public function uploadingDokumenPengajuan(){
         $pengajuanModel = new PengajuanModel();
 

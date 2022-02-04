@@ -232,7 +232,7 @@
                                     <?php if($dataKP['file_alihKredit'] == null && $whoAmI['id_siswa'] == $dataKP['id_siswa']){ ?>
                                         <div class="mb-0">
                                             <p class="text-danger"><strong>Anda belum melakukan upload dokumen pengajuan Alih Kredit</strong></p>
-                                            <a href="<?php echo base_url('student/downloaddokumen'); ?>" target="_blank" class="btn btn-info">Download Form Alih Kredit</a>
+                                            <a href="<?php echo base_url('student/downloaddokumenAlihKredit'); ?>" target="_blank" class="btn btn-info">Download Form Alih Kredit</a>
                                             <a href="<?php echo base_url('student/uploadpengajuan'); ?>" class="btn btn-primary">Upload Dokumen</a>
                                         </div>
                                     <?php }else if($dataKP['file_kp'] != null){ ?>
