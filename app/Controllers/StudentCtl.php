@@ -90,7 +90,17 @@ class StudentCtl extends BaseController
             return view('student/index', $data);
         }else if($isAlihKredit == true){
             $whoAmI = $studentModel->where('id_siswa', session()->get('loggedUser'))->first();
-            echo "Ini alih kredit boss";
+            $dataKP = $alihKredit->where('id_siswa', session()->get('loggedUser'))->first();
+            $siswaKp = $studentModel->where('id_siswa', session()->get('loggedUser'))->first();
+            $dosenPembimbing = $lectureModel->where('id_dosen', $dataKP['id_dosen'])->first();
+            $data = [
+                'dataKP' => $dataKP,
+                'dosen' => $dosenPembimbing,
+                'siswaKp' => $siswaKp,
+                'whoAmI' => $whoAmI,
+                'dataLowongan' => $dataLowongan,
+            ];
+            return view('student/indexAlihKredit', $data);
         }
     }
 
