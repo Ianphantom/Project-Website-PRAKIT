@@ -118,7 +118,7 @@
                             <td><?php echo htmlentities($e->nrp) ?></td>
                             <td><?php echo htmlentities($e->nama_dosen) ?></td>
                             <td>
-                                <a target="_blank" href="<?php echo base_url('assets/pengajuankp/'.htmlentities($e->file_kp)) ?>" class="btn btn-outline-primary block">Show</a>
+                                <a target="_blank" href="<?php echo base_url('assets/suratPengajuan/'.htmlentities($e->file_kp)) ?>" class="btn btn-outline-primary block">Show</a>
                                 <a href="<?php echo base_url('admin/suratpengantarkp/'.htmlentities($e->id_kp)) ?>" class="btn btn-outline-primary block">Send SP</a>
                             <td>
                         </tr>

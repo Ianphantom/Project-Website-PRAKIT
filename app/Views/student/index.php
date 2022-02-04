@@ -249,7 +249,7 @@
                                         </div>
                                     <?php }else if($dataKP['file_kp'] != null){ ?>
                                         <div class="mb-0">
-                                            <a href="<?php echo base_url('assets/pengajuankp/'.htmlentities($dataKP['file_kp'])) ?>" target="_blank"><?php echo $dataKP['file_kp'] ?></a>
+                                            <a href="<?php echo base_url('assets/suratPengajuan/'.htmlentities($dataKP['file_kp'])) ?>" target="_blank"><?php echo $dataKP['file_kp'] ?></a>
                                         </div>
                                     <?php } ?>
                                 </div>

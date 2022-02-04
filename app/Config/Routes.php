@@ -43,6 +43,7 @@ $routes->get('student/pengajuanKP', 'StudentCtl::userDaftarPengajuan', ['filter'
 $routes->get('student/downloaddokumen', 'StudentCtl::downloadPengajuan', ['filter' => 'authStudent']);
 $routes->get('student/downloaddokumenAlihKredit', 'StudentCtl::downloadPengajuanAlihKredit', ['filter' => 'authStudent']);
 $routes->get('student/uploadpengajuan', 'StudentCtl::uploadDokumenPengajuan', ['filter' => 'authStudent']);
+$routes->get('student/uploadpengajuanAlihKredit', 'StudentCtl::uploadDokumenPengajuanAlihKredit', ['filter' => 'authStudent']);
 $routes->get('student/formsks', 'StudentCtl::formAlihKredit', ['filter' => 'authStudent']);
 $routes->get('student/logout', 'StudentCtl::logout', ['filter' => 'authStudent']);
 

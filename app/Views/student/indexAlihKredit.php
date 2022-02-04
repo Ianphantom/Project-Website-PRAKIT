@@ -233,11 +233,11 @@
                                         <div class="mb-0">
                                             <p class="text-danger"><strong>Anda belum melakukan upload dokumen pengajuan Alih Kredit</strong></p>
                                             <a href="<?php echo base_url('student/downloaddokumenAlihKredit'); ?>" target="_blank" class="btn btn-info">Download Form Alih Kredit</a>
-                                            <a href="<?php echo base_url('student/uploadpengajuan'); ?>" class="btn btn-primary">Upload Dokumen</a>
+                                            <a href="<?php echo base_url('student/uploadpengajuanAlihKredit'); ?>" class="btn btn-primary">Upload Dokumen</a>
                                         </div>
-                                    <?php }else if($dataKP['file_kp'] != null){ ?>
+                                    <?php }else if($dataKP['file_alihKredit'] != null){ ?>
                                         <div class="mb-0">
-                                            <a href="<?php echo base_url('assets/pengajuankp/'.htmlentities($dataKP['file_kp'])) ?>" target="_blank"><?php echo $dataKP['file_kp'] ?></a>
+                                            <a href="<?php echo base_url('assets/suratPengajuan/'.htmlentities($dataKP['file_alihKredit'])) ?>" target="_blank"><?php echo $dataKP['file_alihKredit'] ?></a>
                                         </div>
                                     <?php } ?>
                                 </div>

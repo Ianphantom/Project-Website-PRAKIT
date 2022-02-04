@@ -14,7 +14,7 @@ class AlihKreditModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id_alihkredit', 'id_siswa', 'sks','alamat','nomor_telepon', 'id_dosen', 'nama_perusahaan','alamat_perusahaan','telepon_perusahaan', 'wakil_perusahaan', 'deskripsi_pekerjaan', 'tanggal_pelaksanaan', 'tanggal_selesai','tanggal_pengajuan','profil_perusahaan', 'surat_pengantar', 'surat_penilaianPerusahaan','status'];
+    protected $allowedFields    = ['id_alihkredit', 'id_siswa', 'sks','alamat','nomor_telepon', 'id_dosen', 'nama_perusahaan','alamat_perusahaan','telepon_perusahaan', 'wakil_perusahaan', 'deskripsi_pekerjaan', 'tanggal_pelaksanaan', 'tanggal_selesai','tanggal_pengajuan','profil_perusahaan', 'surat_pengantar', 'surat_penilaianPerusahaan','status', 'file_alihKredit'];
 
     // Dates
     protected $useTimestamps = false;

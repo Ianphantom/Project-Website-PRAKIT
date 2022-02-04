@@ -141,6 +141,13 @@ class StudentCtl extends BaseController
         return view('student/uploaddokumen', $data);
     }
 
+    public function uploadDokumenPengajuanAlihKredit(){
+        $data = [
+            'error' => '',
+        ];
+        return view('student/uploaddokumenAlihKredit', $data);
+    }
+
     public function pengumpulanLogbook(){
         $pengajuanModel = new PengajuanModel();
         $partnerModel = new KppartnerModel();
@@ -359,7 +366,7 @@ class StudentCtl extends BaseController
             'user1' => $currentUser,
             'dosen1' => $dosen1,
         ];
-        return view('student/formpengajuan-kp-1', $data);
+        return view('student/formpengajuan-alihKredit', $data);
     }
 
     public function uploadingDokumenPengajuan(){
@@ -391,7 +398,41 @@ class StudentCtl extends BaseController
             'status'                            => "Pengajuan KP"
         ];
         $pengajuanModel->update($datakp['id_kp'], $inputData1);
-        $dataBerkas->move('assets/pengajuankp/', $fileName);
+        $dataBerkas->move('assets/suratPengajuan/', $fileName);
+
+        return redirect()->to(base_url('student/home'))->with('success', 'Document Pengajuan KP has been Uploaded');
+    }
+
+    public function uploadingDokumenPengajuanAlihKredit(){
+        $alihKredit = new AlihKreditModel();
+
+        $datakp = $alihKredit->where('id_siswa', session()->get('loggedUser'))->first();
+        // echo $datakp['id_kp'];
+        helper(['form']);
+        $rules = [
+            'namaBerkas' => 'required',
+            'file' => 'uploaded[file]',
+        ];
+
+        if(!$this-> validate($rules)){
+            $error = $this->validator->getErrors();
+            $data = [
+                'error' => $error,
+            ];
+            return view('student/uploaddokumenAlihKredit', $data);
+        }
+
+        helper('date');
+        helper('text');
+        $dataBerkas = $this->request->getFile('file');
+		$fileName = session()->get('loggedUser'). '_' . now('Asia/Kolkata') .  '_' .  strtolower($this->request->getVar('namaBerkas')) . '_' . $dataBerkas->getRandomName();
+        
+        $inputData1 = [
+            'file_alihKredit'                   => $fileName,
+            'status'                            => "Pengajuan Alih Kredit"
+        ];
+        $alihKredit->update($datakp['id_alihkredit'], $inputData1);
+        $dataBerkas->move('assets/suratPengajuan/', $fileName);
 
         return redirect()->to(base_url('student/home'))->with('success', 'Document Pengajuan KP has been Uploaded');
     }
