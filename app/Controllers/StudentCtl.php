@@ -14,6 +14,7 @@ use App\Models\LowonganModel;
 use App\Models\BerkasModel;
 use App\Models\PersyaratanModel;
 use App\Models\AlihKreditModel;
+use App\Models\NilaiAlihKreditModel;
 
 class StudentCtl extends BaseController
 {
@@ -88,6 +89,7 @@ class StudentCtl extends BaseController
             ]; 
             return view('student/index', $data);
         }else if($isAlihKredit == true){
+            $whoAmI = $studentModel->where('id_siswa', session()->get('loggedUser'))->first();
             echo "Ini alih kredit boss";
         }
     }
@@ -619,6 +621,77 @@ class StudentCtl extends BaseController
 
         }
         return redirect()->to(base_url('student/home'))->with('success', 'Penambahan data KP berhasil, selanjutnya lakukan upload Dokumen Pengajuan KP');
+    }
+
+    public function insertingAlihKredit(){
+        $studentModel = new StudentModel();
+        $lectureModel = new LectureModel();
+        $id = session()->get('loggedUser');
+        $currentUser = $studentModel->where("id_siswa", $id)->first();
+        $allUser = $studentModel->where("id_siswa !=", $id)->findAll();
+        $allLecture = $lectureModel->selectDosenName();
+        helper(['form']);
+        $rules = [
+            'sks1' => 'required|numeric', // tambah maksimal
+            'alamat1' => 'required|min_length[3]',
+            'nomor1' => 'required|numeric',
+            'doswal' =>  'required',
+            'namaPerusahaan' => 'required|min_length[3]',
+            'alamatPerusahaan' => 'required|min_length[3]',
+            'nomorPerusahaan' => 'required|numeric',
+            'namaWakilPerusahaan' => 'required',
+            'deskripsi' => 'required',
+            'tanggalMulai' => 'required',
+            'tanggalSelesai' => 'required',
+            'profilPerusahaan' => 'required'
+        ];
+
+        if(!$this-> validate($rules)){
+            $error = $this->validator->getErrors();
+            $data = [
+                'lectures' => $allLecture,
+                'user' => $currentUser,
+                'allUser' => $allUser,
+                'error' => $error,
+            ];
+            return view('student/form-alih', $data);
+        }
+
+        helper('date');
+        helper('text');
+        $dataBerkas = $this->request->getFile('file');
+		$fileName = session()->get('loggedUser'). '_' . now('Asia/Kolkata') .  '_' .  'mahasiswa' . '_' . $dataBerkas->getRandomName();
+
+        $inputData = [
+            'id_siswa'              => session()->get('loggedUser'),
+            'sks'                   => $this->request->getVar('sks1'),
+            'alamat'                => $this->request->getVar('alamat1'),
+            'nomor_telepon'         => $this->request->getVar('nomor1'),
+            'id_dosen'              => $this->request->getVar('doswal'),
+            'nama_perusahaan'       => $this->request->getVar('namaPerusahaan'),
+            'alamat_perusahaan'     => $this->request->getVar('alamatPerusahaan'),
+            'telepon_perusahaan'    => $this->request->getVar('nomorPerusahaan'),
+            'wakil_perusahaan'      => $this->request->getVar('namaWakilPerusahaan'),
+            'deskripsi_pekerjaan'   => $this->request->getVar('deskripsi'),
+            'tanggal_pelaksanaan'   => $this->request->getVar('tanggalMulai'),
+            'tanggal_selesai'       => $this->request->getVar('tanggalSelesai'),
+            'profil_perusahaan'     => $this->request->getVar('profilPerusahaan'),
+            'surat_penilaianPerusahaan' => $fileName,
+        ];
+        
+        $pengajuanModel = new AlihKreditModel();
+        $pengajuanModel->insert($inputData);
+        $dataBerkas->move('assets/suratPenilaianAlihKredit/', $fileName);
+        $alih_id = $pengajuanModel->getInsertID();
+
+        $nilaiModel = new NilaiAlihKreditModel();
+        $inputNilai = [
+            'id_alihKredit'     => $alih_id,
+            'id_siswa'  => session()->get('loggedUser'),
+        ];
+        $nilaiModel->insert($inputNilai);
+        
+        return redirect()->to(base_url('student/home'))->with('success', 'Pengajuan Alih Kredit Berhasil, selanjutnya lakukan upload Dokumen Pengajuan Alih Kredit');
     }
 
     

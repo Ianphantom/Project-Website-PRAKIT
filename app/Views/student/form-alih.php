@@ -119,7 +119,7 @@
     <!-- Basic Horizontal form layout section start -->
     <section id="basic-horizontal-layouts">
         <div class="row match-height">
-            <form action="<?php echo base_url() ?>/studentctl/insertingkp" method="post" enctype='multipart/form-data'>
+            <form action="<?php echo base_url() ?>/studentctl/insertingAlihKredit" method="post" enctype='multipart/form-data'>
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
@@ -214,7 +214,7 @@
 
                                         <label class="form-label">Input Surat Pengantar Perusahaan / Penilaian Pembimbing lapangan </label>
                                         <section id="input-file-browser">
-                                            <input class="form-control" type="file" name="suratPengantar" id="formFile" required>
+                                            <input class="form-control" type="file" name="file" id="formFile" required>
                                         </section>
                                     </div>
                                 </div>
