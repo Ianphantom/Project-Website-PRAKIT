@@ -203,33 +203,87 @@ class StudentCtl extends BaseController
         $studentModel = new StudentModel();
         $lectureModel = new LectureModel();
         $partnerModel = new KppartnerModel();
+        $alihKredit = new AlihKreditModel();
+
 
         $data_kp = $pengajuanModel->getPengajuanKP(session()->get('loggedUser'));
+        // if($data_kp == 0){
+        //     $data_partner = $partnerModel->getPengajuanKP(session()->get('loggedUser'));
+        //     if($data_partner == 0){
+        //         return view('student/index_null');
+        //     }
+        //     $dataSiswaKP = $partnerModel->where('id_siswa', session()->get('loggedUser'))->first();
+        // }else{
+        //     $dataSiswaKP = $pengajuanModel->where('id_siswa', session()->get('loggedUser'))->first();
+        // }
+
+        // $siswaKp = $studentModel->getNamaSiswa(session()->get('loggedUser'));
+        // $whoAmI = $studentModel->where('id_siswa', session()->get('loggedUser'))->first();
+        // $dataKP = $pengajuanModel->where('id_kp', $dataSiswaKP['id_kp'])->first();
+        // $dosenPembimbing = $lectureModel->where('id_dosen', $dataSiswaKP['id_dosen'])->first();
+        
+
+        // $data = [
+        //     'user' => $dataSiswaKP,
+        //     'dataKP' => $dataKP,
+        //     'dosen' => $dosenPembimbing,
+        //     'siswaKp' => $siswaKp,
+        //     'whoAmI' => $whoAmI,
+        // ]; 
+        // return view('student/profile', $data);
+        // return view('student/profile');
         if($data_kp == 0){
             $data_partner = $partnerModel->getPengajuanKP(session()->get('loggedUser'));
             if($data_partner == 0){
-                return view('student/index_null');
+                $isKp = false;
+                $cekAlihKredit = $alihKredit->getAlihKredit(session()->get('loggedUser'));
+                if($cekAlihKredit == 0){
+                    $isAlihKredit = false;
+                }else if($cekAlihKredit > 0 ){
+                    $isAlihKredit = true;
+                }
+            }else{
+                $dataSiswaKP = $partnerModel->where('id_siswa', session()->get('loggedUser'))->first();
+                $isKp = true;
             }
-            $dataSiswaKP = $partnerModel->where('id_siswa', session()->get('loggedUser'))->first();
-        }else{
+        }else if($data_kp > 0){
             $dataSiswaKP = $pengajuanModel->where('id_siswa', session()->get('loggedUser'))->first();
+            $isKp = true;
         }
 
-        $siswaKp = $studentModel->getNamaSiswa(session()->get('loggedUser'));
-        $whoAmI = $studentModel->where('id_siswa', session()->get('loggedUser'))->first();
-        $dataKP = $pengajuanModel->where('id_kp', $dataSiswaKP['id_kp'])->first();
-        $dosenPembimbing = $lectureModel->where('id_dosen', $dataSiswaKP['id_dosen'])->first();
-        
-
-        $data = [
-            'user' => $dataSiswaKP,
-            'dataKP' => $dataKP,
-            'dosen' => $dosenPembimbing,
-            'siswaKp' => $siswaKp,
-            'whoAmI' => $whoAmI,
-        ]; 
-        return view('student/profile', $data);
-        // return view('student/profile');
+        if($isKp == false && $isAlihKredit == false){
+            $data = [
+                'dataLowongan' => $dataLowongan,
+            ];
+            return view('student/index_nullDashboard', $data);
+        }else if($isKp == true){
+            $siswaKp = $studentModel->getNamaSiswa(session()->get('loggedUser'));
+            $whoAmI = $studentModel->where('id_siswa', session()->get('loggedUser'))->first();
+            $dataKP = $pengajuanModel->where('id_kp', $dataSiswaKP['id_kp'])->first();
+            $dosenPembimbing = $lectureModel->where('id_dosen', $dataSiswaKP['id_dosen'])->first();
+            $data = [
+                'user' => $dataSiswaKP,
+                'dataKP' => $dataKP,
+                'dosen' => $dosenPembimbing,
+                'siswaKp' => $siswaKp,
+                'whoAmI' => $whoAmI,
+                // 'dataLowongan' => $dataLowongan,
+            ]; 
+            return view('student/profile', $data);
+        }else if($isAlihKredit == true){
+            $whoAmI = $studentModel->where('id_siswa', session()->get('loggedUser'))->first();
+            $dataKP = $alihKredit->where('id_siswa', session()->get('loggedUser'))->first();
+            $siswaKp = $studentModel->where('id_siswa', session()->get('loggedUser'))->first();
+            $dosenPembimbing = $lectureModel->where('id_dosen', $dataKP['id_dosen'])->first();
+            $data = [
+                'dataKP' => $dataKP,
+                'dosen' => $dosenPembimbing,
+                'siswaKp' => $siswaKp,
+                'whoAmI' => $whoAmI,
+                // 'dataLowongan' => $dataLowongan,
+            ];
+            return view('student/profileAlihKredit', $data);
+        }
     }
 
     public function userDaftarPengajuan(){
