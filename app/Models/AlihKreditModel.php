@@ -45,4 +45,13 @@ class AlihKreditModel extends Model
         $res = $this->db->query($query);
         return $res->getNumRows();
     }
+
+    function getDataPengajuanAlihKredit(){
+        $query = "SELECT *, siswa.nama as nama_siswa, dosen.nama as nama_dosen FROM alihkredit
+                    INNER JOIN siswa ON alihkredit.id_siswa=siswa.id_siswa 
+                    INNER JOIN dosen ON dosen.id_dosen=alihkredit.id_dosen 
+                    WHERE alihkredit.status = 'Pengajuan Alih Kredit';";
+        $res = $this->db->query($query);
+        return $res->getResult();
+    }
 }

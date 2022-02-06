@@ -126,6 +126,37 @@
                 </table>
             </div>
         </div>
+
+        <div class="card mt-5">
+            <div class="card-header text-muted">
+                <h4 class="card-title text-center">Mahasiswa yang Mengajukan Alih Kredit :</h4>
+            </div>
+            <div class="page-content">
+                <table class="text-center">
+                    <tr>
+                        <th rowspan="1">No</th>
+                        <th rowspan="1">Nama</th>
+                        <th rowspan="1">NRP</th>
+                        <th rowspan="1">Dosen Wali</th>
+                        <th rowspan="1">Surat Pengajuan KP</th>
+                    </tr>
+                    <?php
+                        $i = 0;  
+                        foreach ($alih_kredit as $e) : $i++;?>
+                        <tr>
+                            <td><?php echo htmlentities($i) ?></td>
+                            <td><?php echo htmlentities($e->nama_siswa) ?></td>
+                            <td><?php echo htmlentities($e->nrp) ?></td>
+                            <td><?php echo htmlentities($e->nama_dosen) ?></td>
+                            <td>
+                                <a target="_blank" href="<?php echo base_url('assets/suratPengajuan/'.htmlentities($e->file_alihKredit)) ?>" class="btn btn-outline-primary block">Show</a>
+                                <a href="<?php echo base_url('admin/suratpengantarAlihKredit/'.htmlentities($e->id_alihkredit)) ?>" class="btn btn-outline-primary block">Send SP</a>
+                            <td>
+                        </tr>
+                    <?php endforeach ?>
+                </table>
+            </div>
+        </div>
     </div> 
     
 

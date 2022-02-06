@@ -8,15 +8,19 @@ use App\Models\PengajuanModel;
 use App\Models\StudentModel;
 use App\Models\LectureModel;
 use App\Models\LaporanModel;
+use App\Models\AlihKreditModel;
 
 class AdminCtl extends BaseController
 {
     public function index()
     {
         $pengajuanModel = new PengajuanModel();
+        $alihKredit = new AlihKreditModel();
         $data_pengajuan = $pengajuanModel->getDataPengajuan();
+        $data_pengajuanAlihKredit = $alihKredit->getDataPengajuanAlihKredit();
         $data = [
             'data_pengajuan' => $data_pengajuan,
+            'alih_kredit' => $data_pengajuanAlihKredit,
         ];
         return view('admin/dashboard', $data);
     }
