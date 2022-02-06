@@ -68,6 +68,49 @@ class AdminCtl extends BaseController
         return redirect()->to(base_url('admin/home'))->with('success', 'Document Surat Pengantar KP has been Uploaded');
     }
 
+    public function suratpengantarAlihKredit($seg1 = false){
+        $data = [
+            'id_alihKredit' => $seg1,
+            'error' => '',
+        ];
+        return view('admin/surat_pengantarAlihKredit', $data);
+    }
+
+    public function uploadingSuratPengantarAlihKredit($seg1 = false){
+        $pengajuanModel = new AlihKreditModel();
+
+        $datakp = $pengajuanModel->where('id_alihkredit', $seg1)->first();
+        // echo $datakp['id_kp'];
+        helper(['form']);
+        $rules = [
+            'namaBerkas' => 'required',
+            'file' => 'uploaded[file]',
+        ];
+
+        if(!$this-> validate($rules)){
+            $error = $this->validator->getErrors();
+            $data = [
+                'error' => $error,
+                'id_kp' => $seg1,
+            ];
+            return view('admin/surat_pengantarAlihKredit', $data);
+        }
+
+        helper('date');
+        helper('text');
+        $dataBerkas = $this->request->getFile('file');
+		$fileName = session()->get('loggedUser'). '_' . now('Asia/Kolkata') .  '_' .  strtolower($this->request->getVar('namaBerkas')) . '_' . $dataBerkas->getRandomName();
+        
+        $inputData1 = [
+            'surat_pengantar'                          => $fileName,
+            'status'                            => "ON PROGRESS"
+        ];
+        $pengajuanModel->update($datakp['id_alihkredit'], $inputData1);
+        $dataBerkas->move('assets/suratpengantar/', $fileName);
+
+        return redirect()->to(base_url('admin/home'))->with('success', 'Document Surat Pengantar KP has been Uploaded');
+    }
+
     public function statuspengajuanmhs(){
         $pengajuanModel = new PengajuanModel();
         $data_mahasiswa1 = $pengajuanModel->getStatusKp1();

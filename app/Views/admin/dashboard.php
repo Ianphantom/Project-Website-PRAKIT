@@ -150,7 +150,7 @@
                             <td><?php echo htmlentities($e->nama_dosen) ?></td>
                             <td>
                                 <a target="_blank" href="<?php echo base_url('assets/suratPengajuan/'.htmlentities($e->file_alihKredit)) ?>" class="btn btn-outline-primary block">Show</a>
-                                <a href="<?php echo base_url('admin/suratpengantarAlihKredit/'.htmlentities($e->id_alihkredit)) ?>" class="btn btn-outline-primary block">Send SP</a>
+                                <a href="<?php echo base_url('admin/suratpengantaralihkredit/'.htmlentities($e->id_alihkredit)) ?>" class="btn btn-outline-primary block">Send SP</a>
                             <td>
                         </tr>
                     <?php endforeach ?>
