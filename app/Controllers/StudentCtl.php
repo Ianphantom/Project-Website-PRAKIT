@@ -9,6 +9,7 @@ use App\Models\KppartnerModel;
 use App\Models\PengajuanModel;
 use App\Models\LogbookModel;
 use App\Models\LaporanModel;
+use App\Models\LaporanAlihKreditModel;
 use App\Models\NilaiModel;
 use App\Models\LowonganModel;
 use App\Models\BerkasModel;
@@ -178,31 +179,73 @@ class StudentCtl extends BaseController
         $studentModel = new StudentModel();
         $lectureModel = new LectureModel();
         $partnerModel = new KppartnerModel();
+        $alihKredit = new AlihKreditModel();
         $data_kp = $pengajuanModel->getPengajuanKP(session()->get('loggedUser'));
+        // if($data_kp == 0){
+        //     $data_partner = $partnerModel->getPengajuanKP(session()->get('loggedUser'));
+        //     if($data_partner == 0){
+        //         return view('student/pengumpulan-berkas_null');
+        //     }
+        //     $dataSiswaKP = $partnerModel->where('id_siswa', session()->get('loggedUser'))->first();
+        // }else{
+        //     $dataSiswaKP = $pengajuanModel->where('id_siswa', session()->get('loggedUser'))->first();
+        // }
+
         if($data_kp == 0){
             $data_partner = $partnerModel->getPengajuanKP(session()->get('loggedUser'));
             if($data_partner == 0){
-                return view('student/pengumpulan-berkas_null');
+                $isKp = false;
+                $cekAlihKredit = $alihKredit->getAlihKredit(session()->get('loggedUser'));
+                if($cekAlihKredit == 0){
+                    $isAlihKredit = false;
+                }else if($cekAlihKredit > 0 ){
+                    $isAlihKredit = true;
+                }
+            }else{
+                $dataSiswaKP = $partnerModel->where('id_siswa', session()->get('loggedUser'))->first();
+                $isKp = true;
             }
-            $dataSiswaKP = $partnerModel->where('id_siswa', session()->get('loggedUser'))->first();
-        }else{
+        }else if($data_kp > 0){
             $dataSiswaKP = $pengajuanModel->where('id_siswa', session()->get('loggedUser'))->first();
+            $isKp = true;
         }
 
-        $whereQuery="id_siswa='".session()->get('loggedUser')."' OR id_partner='".session()->get('loggedUser')."'";
-        $onprogress = $pengajuanModel->where($whereQuery)->first();
-        if( $onprogress['status'] != "ON PROGRESS"){
-            return view('student/logbook_null');
+        if($isKp == false && $isAlihKredit == false){
+            $data = [
+                'dataLowongan' => $dataLowongan,
+            ];
+            return view('student/index_nullDashboard', $data);
+        }else if($isKp == true){
+            $whereQuery="id_siswa='".session()->get('loggedUser')."' OR id_partner='".session()->get('loggedUser')."'";
+            $onprogress = $pengajuanModel->where($whereQuery)->first();
+            if( $onprogress['status'] != "ON PROGRESS"){
+                return view('student/pengumpulan-berkas_null');
+            }
+            
+            $whoAmI = $studentModel->where('id_siswa', session()->get('loggedUser'))->first();
+            $dosenPembimbing = $lectureModel->where('id_dosen', $dataSiswaKP['id_dosen'])->first();
+            $data = [
+                'dosen' => $dosenPembimbing,
+                'whoAmI' => $whoAmI,
+                'error' => '',
+            ]; 
+            return view('student/pengumpulan-berkas', $data);
+        }else if($isAlihKredit == true){
+            $whereQuery="id_siswa='".session()->get('loggedUser')."'";
+            $onprogress = $alihKredit->where($whereQuery)->first();
+            if( $onprogress['status'] != "ON PROGRESS"){
+                return redirect()->to(base_url('student/home'))->with('fail', 'Anda Belum Mendapatkan Surat Pengantar KP');
+            }
+            $dataAlihKredit = $alihKredit->where('id_siswa', session()->get('loggedUser'))->first();
+            $whoAmI = $studentModel->where('id_siswa', session()->get('loggedUser'))->first();
+            $dosenPembimbing = $lectureModel->where('id_dosen', $dataAlihKredit['id_dosen'])->first();
+            $data = [
+                'dosen' => $dosenPembimbing,
+                'whoAmI' => $whoAmI,
+                'error' => '',
+            ]; 
+            return view('student/pengumpulan-berkas-alihkredit', $data);
         }
-        
-        $whoAmI = $studentModel->where('id_siswa', session()->get('loggedUser'))->first();
-        $dosenPembimbing = $lectureModel->where('id_dosen', $dataSiswaKP['id_dosen'])->first();
-        $data = [
-            'dosen' => $dosenPembimbing,
-            'whoAmI' => $whoAmI,
-            'error' => '',
-        ]; 
-        return view('student/pengumpulan-berkas', $data);
     }
 
     public function userProfile(){
@@ -535,50 +578,121 @@ class StudentCtl extends BaseController
         $pengajuanModel = new PengajuanModel();
         $partnerModel = new KppartnerModel();
         $laporanModel = new LaporanModel();
+        $alihKredit = new AlihKreditModel();
+        $studentModel = new StudentModel();
+        $lectureModel = new LectureModel();
+
         $data_kp = $pengajuanModel->getPengajuanKP(session()->get('loggedUser'));
+        // if($data_kp == 0){
+        //     $data_partner = $partnerModel->getPengajuanKP(session()->get('loggedUser'));
+        //     if($data_partner == 0){
+        //         return view('student/logbook_null');
+        //     }$dataSiswaKP = $partnerModel->where('id_siswa', session()->get('loggedUser'))->first();
+        // }else{
+        //     $dataSiswaKP = $pengajuanModel->where('id_siswa', session()->get('loggedUser'))->first();
+        // }
+
         if($data_kp == 0){
             $data_partner = $partnerModel->getPengajuanKP(session()->get('loggedUser'));
             if($data_partner == 0){
-                return view('student/logbook_null');
-            }$dataSiswaKP = $partnerModel->where('id_siswa', session()->get('loggedUser'))->first();
-        }else{
+                $isKp = false;
+                $cekAlihKredit = $alihKredit->getAlihKredit(session()->get('loggedUser'));
+                if($cekAlihKredit == 0){
+                    $isAlihKredit = false;
+                }else if($cekAlihKredit > 0 ){
+                    $isAlihKredit = true;
+                }
+            }else{
+                $dataSiswaKP = $partnerModel->where('id_siswa', session()->get('loggedUser'))->first();
+                $isKp = true;
+            }
+        }else if($data_kp > 0){
             $dataSiswaKP = $pengajuanModel->where('id_siswa', session()->get('loggedUser'))->first();
+            $isKp = true;
         }
 
-        helper(['form']);
-        $rules = [
-            'namaBerkas' => 'required',
-            'keterangan' => 'required',
-            'file' => 'uploaded[file]',
-        ];
-
-        if(!$this-> validate($rules)){
-            $error = $this->validator->getErrors();
-            $data = [
-                'error' => $error,
+        if($isKp == false && $isAlihKredit == false){
+            return view('student/index_null');
+        }else if($isKp == true){
+            helper(['form']);
+            $rules = [
+                'namaBerkas' => 'required',
+                'keterangan' => 'required',
+                'file' => 'uploaded[file]',
             ];
-            return view('student/pengumpulan-berkas', $data);
-        }
 
-        helper('date');
-        helper('text');
-        $dataBerkas = $this->request->getFile('file');
-		$fileName = session()->get('loggedUser'). '_' . now('Asia/Kolkata') .  '_' .  strtolower($this->request->getVar('namaBerkas')) . '_' . $dataBerkas->getRandomName();
-        // echo $fileName;
-        
-		$dataBerkas->move('assets/laporankp/', $fileName);
-        $inputData1 = [
-            'id_kp'                         => $dataSiswaKP['id_kp'],
-            'id_siswa'                      => session()->get('loggedUser'),
-            'keterangan'                    => $this->request->getVar('keterangan'),
-            'file'                          => $fileName,
-        ];
-        $inserting = $laporanModel->save($inputData1);
-        $inputData2 = [
-            'status'              => 'FINISHED',
-        ];
-        $pengajuanModel->update($dataSiswaKP['id_kp'], $inputData2);
-        return redirect()->to(base_url('student/home'))->with('success', 'Laporan KP has been Uploaded');
+            if(!$this-> validate($rules)){
+                $error = $this->validator->getErrors();
+                $data = [
+                    'error' => $error,
+                ];
+                return view('student/pengumpulan-berkas', $data);
+            }
+
+            helper('date');
+            helper('text');
+            $dataBerkas = $this->request->getFile('file');
+            $fileName = session()->get('loggedUser'). '_' . now('Asia/Kolkata') .  '_' .  strtolower($this->request->getVar('namaBerkas')) . '_' . $dataBerkas->getRandomName();
+            // echo $fileName;
+            
+            $dataBerkas->move('assets/laporankp/', $fileName);
+            $inputData1 = [
+                'id_kp'                         => $dataSiswaKP['id_kp'],
+                'id_siswa'                      => session()->get('loggedUser'),
+                'keterangan'                    => $this->request->getVar('keterangan'),
+                'file'                          => $fileName,
+            ];
+            $inserting = $laporanModel->save($inputData1);
+            $inputData2 = [
+                'status'              => 'FINISHED',
+            ];
+            $pengajuanModel->update($dataSiswaKP['id_kp'], $inputData2);
+            return redirect()->to(base_url('student/home'))->with('success', 'Laporan KP has been Uploaded');
+        }else if($isAlihKredit == true){
+            $laporanAlihKreditModel = new LaporanAlihKreditModel();
+            helper(['form']);
+            $rules = [
+                'namaBerkas' => 'required',
+                'keterangan' => 'required',
+                'file' => 'uploaded[file]',
+            ];
+
+            $dataAlihKredit = $alihKredit->where('id_siswa', session()->get('loggedUser'))->first();
+
+
+            if(!$this-> validate($rules)){
+                $error = $this->validator->getErrors();
+                $whoAmI = $studentModel->where('id_siswa', session()->get('loggedUser'))->first();
+                $dosenPembimbing = $lectureModel->where('id_dosen', $dataAlihKredit['id_dosen'])->first();
+
+                $data = [
+                    'error' => $error,
+                    'whoAmI' => $whoAmI,
+                    'dosen' => $dosenPembimbing,
+                ];
+                return view('student/pengumpulan-berkas-alihkredit', $data);
+            }
+
+            helper('date');
+            helper('text');
+            $dataBerkas = $this->request->getFile('file');
+            $fileName = session()->get('loggedUser'). '_' . now('Asia/Kolkata') .  '_' .  strtolower($this->request->getVar('namaBerkas')) . '_' . $dataBerkas->getRandomName();
+            // echo $fileName;
+            
+            $dataBerkas->move('assets/laporankp/', $fileName);
+            $inputData1 = [
+                'id_alihkredit'                         => $dataAlihKredit['id_alihkredit'],
+                'id_siswa'                      => session()->get('loggedUser'),
+                'keterangan'                    => $this->request->getVar('keterangan'),
+                'file'                          => $fileName,
+            ];
+            $inserting = $laporanAlihKreditModel->save($inputData1);
+            $inputData2 = [
+                'status'              => 'FINISHED',
+            ];
+            $alihKredit->update($dataAlihKredit['id_alihkredit'], $inputData2);
+            return redirect()->to(base_url('student/home'))->with('success', 'Laporan KP has been Uploaded');
+        }
     }
 
     public function login()
