@@ -105,7 +105,8 @@
                     <th rowspan="1">NRP</th>
                     <th rowspan="1">Status</th>
                     <th rowspan="1">Tempat Praktek</th>
-                    <th rowspan="1">Logbook</th>
+                    <th rowspan="1" class="text-center">Alih Kredit</th>
+                    <th rowspan="1" class="text-center">Logbook</th>
                 </tr>
                 <?php foreach($data1 as $data){ ?>
                     <tr>
@@ -113,7 +114,8 @@
                         <td><?php echo htmlentities($data->nrp) ?></td>
                         <td><?php echo htmlentities($data->status) ?></td>
                         <td><?php echo htmlentities($data->nama_perusahaan) ?></td>
-                        <td><a target="_blank" href="<?php echo base_url('lecture/logbook/'.htmlentities($data->id_siswa)) ?>"><div type="button" class="btn btn-outline-primary block">Show Logbook</div></a></td>
+                        <td class="text-center">-</td>
+                        <td class="text-center"><a target="_blank" href="<?php echo base_url('lecture/logbook/'.htmlentities($data->id_siswa)) ?>"><div type="button" class="btn btn-outline-primary block">Show Logbook</div></a></td>
                     </tr>
                 <?php } ?>
                 <?php foreach($data2 as $dataDua){ ?>
@@ -122,7 +124,18 @@
                         <td><?php echo htmlentities($dataDua->nrp) ?></td>
                         <td><?php echo htmlentities($dataDua->status) ?></td>
                         <td><?php echo htmlentities($dataDua->nama_perusahaan) ?></td>
-                        <td><a target="_blank" href="<?php echo base_url('lecture/logbook/'.htmlentities($dataDua->id_siswa)) ?>"><div type="button" class="btn btn-outline-primary block">Show Logbook</div></a></td>
+                        <td class="text-center">-</td>
+                        <td class="text-center"><a target="_blank" href="<?php echo base_url('lecture/logbook/'.htmlentities($dataDua->id_siswa)) ?>"><div type="button" class="btn btn-outline-primary block">Show Logbook</div></a></td>
+                    </tr>
+                <?php } ?>
+                <?php foreach($data3 as $dataTiga){ ?>
+                    <tr>
+                        <td><?php echo htmlentities($dataTiga->nama) ?></td>
+                        <td><?php echo htmlentities($dataTiga->nrp) ?></td>
+                        <td><?php echo htmlentities($dataTiga->status) ?></td>
+                        <td><?php echo htmlentities($dataTiga->nama_perusahaan) ?></td>
+                        <td class="text-center">&#10004;</td>
+                        <td class="text-center">-</td>
                     </tr>
                 <?php } ?>
             </table>

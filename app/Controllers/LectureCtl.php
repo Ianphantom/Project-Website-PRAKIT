@@ -21,11 +21,13 @@ class LectureCtl extends BaseController
         
         $data_kp1 = $lectureModel->getDataPengajuankp(session()->get('loggedUser'));
         $data_kp2 = $lectureModel->getDataPartnerkp(session()->get('loggedUser'));
+        $data_alihKredit = $lectureModel->getDataAlihKredit(session()->get('loggedUser'));
         
         $data = [
             'dataDosen' => $dataDosen,
             'data1' => $data_kp1,
             'data2' => $data_kp2,
+            'data3' => $data_alihKredit,
         ];
         return view('lecture/progres-mahasiswa', $data);
     }
