@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 27, 2022 at 02:31 PM
+-- Generation Time: Feb 07, 2022 at 07:53 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.11
 
@@ -63,9 +63,17 @@ CREATE TABLE `alihkredit` (
   `profil_perusahaan` text NOT NULL,
   `tanggal_pengajuan` timestamp NOT NULL DEFAULT current_timestamp(),
   `surat_pengantar` text DEFAULT NULL,
+  `file_alihKredit` text DEFAULT NULL,
   `surat_penilaianPerusahaan` text DEFAULT NULL,
-  `status` text NOT NULL DEFAULT 'KP Submission'
+  `status` text NOT NULL DEFAULT 'Alih Kredit Submission'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `alihkredit`
+--
+
+INSERT INTO `alihkredit` (`id_alihkredit`, `id_siswa`, `sks`, `alamat`, `nomor_telepon`, `id_dosen`, `nama_perusahaan`, `alamat_perusahaan`, `telepon_perusahaan`, `wakil_perusahaan`, `deskripsi_pekerjaan`, `tanggal_pelaksanaan`, `tanggal_selesai`, `profil_perusahaan`, `tanggal_pengajuan`, `surat_pengantar`, `file_alihKredit`, `surat_penilaianPerusahaan`, `status`) VALUES
+(2, 7, 101, 'Ian Fekix Jonathan Simanjuntak', '0473246831', 3, 'Departemen Teknologi Informasi', 'Jalan Kejawan Putih Tambak Gang 2 A no c', '08235732874891234', 'Hari Ginardi', 'Build Monitoring KP website IT ITS', '2022-02-18 00:00:00', '2022-03-12 00:00:00', 'Jurusan dengan fokusan IoT', '2022-02-04 08:07:36', '1_1644184763_suratpengantardanielnihbos_1644143363_d8c5a8bbfbdb7205581c.docx', '7_1644007471_berkasalihkreditdaniel_1643966071_66d3afb9594d8825cddb.docx', '7_1644003456_mahasiswa_1643962056_2d68164bb6c27040c5df.pdf', 'FINISHED');
 
 -- --------------------------------------------------------
 
@@ -118,7 +126,30 @@ INSERT INTO `dosen` (`id_dosen`, `nama`, `email`, `password`) VALUES
 (5, 'Ridho Rahman Hariadi, S.Kom., M.Sc.', 'ridho13@gmail.com', '$2y$10$2YOj5xo94K3LUUOG3QWqy.ozwDUUJKc5ghImxq8Yhyi1p2CQWM2UG'),
 (6, 'Annisaa Sri Indrawanti, S. Kom., M. Kom', 'annisaa@its.ac.id', '$2y$10$8vW9zxruPlymVGqnyb1mHeFChfE9WwZZ.DUMtE1otxJk.xBMXMXAy'),
 (7, 'Dr. Rizka Wakhidatus Sholikah, S. Kom', 'wakhidatus@its.ac.id', '$2y$10$txbHtSjqFx6S3242PEEBN.1SYA28MwzjaukRxWTUY1ddIOG9LMS0W'),
-(8, 'Irzal Ahmad Sabilla, S. Kom.,M.Kom', 'irzal.ahmad.s@gmail.com', '$2y$10$fUM5iULZ/Z2BUyf4ARMLmOqaJE/gSY.SYDdfGSGAEJiPBsM4PfTvG');
+(8, 'Irzal Ahmad Sabilla, S. Kom.,M.Kom', 'irzal.ahmad.s@gmail.com', '$2y$10$fUM5iULZ/Z2BUyf4ARMLmOqaJE/gSY.SYDdfGSGAEJiPBsM4PfTvG'),
+(9, 'nesya kurniadw', 'nesyak@gmail.com', '$2y$10$fL58rfTk7g16I9k8SfVI3OhzkSE7kA0IfEIto0mBhJdckqs055OMC');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `laporanalihkredit`
+--
+
+CREATE TABLE `laporanalihkredit` (
+  `id_laporan` int(11) NOT NULL,
+  `id_alihkredit` int(11) NOT NULL,
+  `id_siswa` int(11) NOT NULL,
+  `tanggal` timestamp NOT NULL DEFAULT current_timestamp(),
+  `file` text NOT NULL,
+  `keterangan` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `laporanalihkredit`
+--
+
+INSERT INTO `laporanalihkredit` (`id_laporan`, `id_alihkredit`, `id_siswa`, `tanggal`, `file`, `keterangan`) VALUES
+(0, 2, 7, '2022-02-07 05:38:20', '7_1644253700_berkas laporan akhir daniel_1644212300_826cdca62187c35afeda.sql', 'Ian Felix');
 
 -- --------------------------------------------------------
 
@@ -224,6 +255,27 @@ INSERT INTO `nilai` (`id_nilai`, `id_kp`, `id_siswa`, `nilai`, `berkas_nilai`) V
 (4, 3, 4, 0, NULL),
 (5, 4, 5, 98, '1_1642125386__1642083986_67a04d940920dda1dca9.docx'),
 (6, 4, 6, 0, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `nilai_alihkredit`
+--
+
+CREATE TABLE `nilai_alihkredit` (
+  `id_nilai` int(11) NOT NULL,
+  `id_alihKredit` int(11) NOT NULL,
+  `id_siswa` int(11) NOT NULL,
+  `nilai` int(11) NOT NULL DEFAULT 0,
+  `berkas_nilai` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `nilai_alihkredit`
+--
+
+INSERT INTO `nilai_alihkredit` (`id_nilai`, `id_alihKredit`, `id_siswa`, `nilai`, `berkas_nilai`) VALUES
+(1, 2, 7, 90, '3_1644257757__1644216357_97f2f2791e1165cfd195.sql');
 
 -- --------------------------------------------------------
 
@@ -339,7 +391,8 @@ INSERT INTO `siswa` (`id_siswa`, `nama`, `email`, `nrp`, `password`) VALUES
 (4, 'Syakhisk Al Azmi', 'syais@gmail.com', '05311940000003', '$2y$10$kdtxmDOOCQzG0TEOQSbfQuexy1k0b7blkgjvJfBRhHCXf/hh6x7eK'),
 (5, 'Christopher Adrian Kusuma', 'adrian@gmail.com', '05311940000016', '$2y$10$U5SCg0cyYQM/lbSNSIOQhuZRD9Uhd6kZZrfqbVQ5A9PnuIRSm68yW'),
 (6, 'Tri Rizki Yuliawan', 'tri@gmail.com', '05311940000017', '$2y$10$IThsX8vdU62.F1XsLFClM.vPZctrGQ17OIYCtDdLVgUXm76dNy1Vm'),
-(7, 'Daniel Evan', 'daniel@gmail.com', '05311940000018', '$2y$10$lGCDxH7NNkwKqjMFLmqU4u/JaBw3aqNqWRJxrpjaGtJdnX6ZCRBSu');
+(7, 'Daniel Evan', 'daniel@gmail.com', '05311940000018', '$2y$10$lGCDxH7NNkwKqjMFLmqU4u/JaBw3aqNqWRJxrpjaGtJdnX6ZCRBSu'),
+(8, 'nesya kurnia', 'nesya@gmail.com', '05311840000009', '$2y$10$409l5sunp1uVv0C/k8W.MuLif.Pfzn.Jo19uQ4nf./YmGPIL2NcPC');
 
 --
 -- Indexes for dumped tables
@@ -352,6 +405,12 @@ ALTER TABLE `admin`
   ADD PRIMARY KEY (`id_admin`);
 
 --
+-- Indexes for table `alihkredit`
+--
+ALTER TABLE `alihkredit`
+  ADD PRIMARY KEY (`id_alihkredit`);
+
+--
 -- Indexes for table `berkas`
 --
 ALTER TABLE `berkas`
@@ -362,6 +421,12 @@ ALTER TABLE `berkas`
 --
 ALTER TABLE `dosen`
   ADD PRIMARY KEY (`id_dosen`);
+
+--
+-- Indexes for table `laporanalihkredit`
+--
+ALTER TABLE `laporanalihkredit`
+  ADD PRIMARY KEY (`id_laporan`);
 
 --
 -- Indexes for table `laporankp`
@@ -385,6 +450,12 @@ ALTER TABLE `lowongan_kp`
 -- Indexes for table `nilai`
 --
 ALTER TABLE `nilai`
+  ADD PRIMARY KEY (`id_nilai`);
+
+--
+-- Indexes for table `nilai_alihkredit`
+--
+ALTER TABLE `nilai_alihkredit`
   ADD PRIMARY KEY (`id_nilai`);
 
 --
@@ -422,6 +493,12 @@ ALTER TABLE `admin`
   MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `alihkredit`
+--
+ALTER TABLE `alihkredit`
+  MODIFY `id_alihkredit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `berkas`
 --
 ALTER TABLE `berkas`
@@ -431,7 +508,7 @@ ALTER TABLE `berkas`
 -- AUTO_INCREMENT for table `dosen`
 --
 ALTER TABLE `dosen`
-  MODIFY `id_dosen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_dosen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `laporankp`
@@ -455,7 +532,13 @@ ALTER TABLE `lowongan_kp`
 -- AUTO_INCREMENT for table `nilai`
 --
 ALTER TABLE `nilai`
-  MODIFY `id_nilai` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_nilai` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `nilai_alihkredit`
+--
+ALTER TABLE `nilai_alihkredit`
+  MODIFY `id_nilai` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `partnerkp`
@@ -479,7 +562,7 @@ ALTER TABLE `persyaratan`
 -- AUTO_INCREMENT for table `siswa`
 --
 ALTER TABLE `siswa`
-  MODIFY `id_siswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_siswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
