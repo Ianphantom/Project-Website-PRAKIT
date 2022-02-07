@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pengajuan KP</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>PRAKIT</title>
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="../assets/css/bootstrap.css">
+        
+    <link rel="stylesheet" href="../assets/vendors/iconly/bold.css">
     
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/bootstrap.css">
-    
-    <link rel="stylesheet" href="../assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
-    <link rel="stylesheet" href="../assets/vendors/bootstrap-icons/bootstrap-icons.css">
-    <link rel="stylesheet" href="../assets/css/app.css">
-    <link rel="shortcut icon" href="../assets/images/favicon.svg" type="image/x-icon">
-    <link rel="icon" type="image/png" href="../assets/images/logo/big-logo.png">
-</head>
+        <link rel="stylesheet" href="../assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+        <link rel="stylesheet" href="../assets/vendors/bootstrap-icons/bootstrap-icons.css">
+        <link rel="stylesheet" href="../assets/css/app.css">
+        <link rel="shortcut icon" href="../assets/images/favicon.svg" type="image/x-icon">
+        <link rel="icon" type="image/png" href="../assets/images/logo/big-logo.png">
+    </head>
 
 <body>
     <div id="app">
@@ -32,7 +34,7 @@
         </div>
     </div>
     <div class="sidebar-menu">
-        <ul class="menu">
+    <ul class="menu">
             <li class="sidebar-title">Menu</li>
             
             <li class="sidebar-item">
@@ -47,14 +49,14 @@
                     <i class="bi bi-collection-fill"></i>
                     <span>Reports</span>
                 </a>
-                <ul class="submenu">
+                <ul class="submenu ">
                     <li class="submenu-item ">
                         <a href="<?php echo base_url('student/pengumpulan-berkas'); ?>">Pengumpulan Laporan</a>
                     </li>
                 </ul>
             </li>
             
-            <li class="sidebar-item has-sub">
+            <li class="sidebar-item has-sub  active">
                 <a href="<?php echo base_url('student/profile'); ?>" class='sidebar-link'>
                     <i class="bi bi-person-badge-fill"></i>
                     <span>Profile</span>
@@ -70,28 +72,30 @@
                         <a href="<?php echo base_url('student/dokumen'); ?>">Unduh Dokumen</a>
                     </li>
                 </ul>
-            </li>    
+            </li>   
+            
             <li class="sidebar-item ">
                 <a href="<?php echo base_url('student/logout'); ?>" class='sidebar-link'>
                     <i class="bi bi-box-arrow-right"></i>
                     <span>Logout</span>
                 </a>
             </li>
+
         </ul>
     </div>
     <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
 </div>
-        </div>
+    </div>
         <div id="main">
             <header class="mb-3">
                 <a href="#" class="burger-btn d-block d-xl-none">
                     <i class="bi bi-justify fs-3"></i>
                 </a>
             </header>
-
-<div class="page-heading">
+        
+<div>
     <nav class="navbar navbar-light">
-        <div class="inline"> 
+        <div class="container d-block">
             <div class="logo">
                 <a onclick="goBack()"><i class="bi bi-chevron-left"></i></a> 
                 <script>
@@ -100,50 +104,75 @@
                     }
                 </script>
                 <a class="navbar-brand ms-5" href="../error-500.html">
-                    Pengumpulan Berkas Pengajuan KP
+                    Data Pengajuan Kerja Praktek
                 </a>
             </div>
         </div>
     </nav>
 </div>
-
-<?php if($error != ""){ ?>
-    <?php foreach($error as $err){ ?>
-        <div class="alert alert-danger text-center" role="alert">
-            <?php echo htmlentities($err); ?>
+<div class="container">
+    <div class="card mt-5">
+        <div class="card mt-3">
+            <div class="button text-center">
+                <a href="../student/form-kp.html" class="btn btn-lg btn-success rounded-pill">Buat Pengajuan</a>
+            </div>
         </div>
-    <?php } ?>
-<?php } ?>
-
-<form id="laporanForm"  role="form" action="<?php echo base_url() ?>/studentctl/uploadingDokumenPengajuanAlihKredit" enctype='multipart/form-data' method="post">    
-    <div>
-        <label class="form-label"> Nama Berkas</label>
-        <input type="text" class="form-control" name="namaBerkas" required>
+        <div class="page-content">
+            <table>
+                <tr>
+                    <th rowspan="1">Tanggal Pengajuan</th>
+                    <th rowspan="1">Keperluan</th>
+                    <th rowspan="1">Status</th>
+                    <th rowspan="1">Cetak Surat</th>
+                </tr>
+                <tr>
+                    <td><?php echo htmlentities($kp['tanggal_pengajuan']) ?></td>
+                    <td>Pengajuan Alih Kredit</td>
+                    <td>
+                        <?php if($kp['status'] == "Pengajuan Alih Kredit"){
+                            echo htmlentities('DALAM PROSES');
+                        }else if($kp['status'] == "Alih Kredit Submission"){
+                            echo htmlentities('BELUM UPLOAD BERKAS');
+                        }else if($kp['status'] == "ON PROGRESS"){
+                            echo htmlentities('DISETUJUI');
+                        } ?>
+                    </td>
+                    <td>
+                        <?php if($kp['status'] == "ON PROGRESS"){ ?>
+                            <a href="<?php echo base_url('assets/suratpengantar/'.htmlentities($kp['surat_pengantar'])) ?>" class="btn btn-outline-primary block">Surat Pengantar KP</a>
+                        <?php }else{
+                            echo htmlentities("-");
+                        } ?>
+                    </td>
+                </tr>
+                <!-- <tr>
+                    <td>31-12-2021</td>
+                    <td>Pengajuan Alih Kredit</td>
+                    <td>DALAM PROSES</td>
+                    <td> - </td>
+                </tr> -->
+            </table>
+        </div>
     </div>
-    <br>
-    <section id="input-file-browser">
-        <input class="form-control" type="file" name="file" id="formFile" required>
-    </section>
-    <br>
-    <input type="submit" class="btn btn-primary ml-1">
-</form>
+</div>
 
-<footer class="sticky-footer fixed-bottom">
+</div>
+
+<footer class="sticky-footer fixed-bottom ">
     <div class="container my-auto">
         <div class="copyright text-center my-auto">
         <span>2021 &copy; Teknologi Informasi</span>
         </div>
     </div>
-</footer>
+</footer>   
+
 <script src="../assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 <script src="../assets/js/bootstrap.bundle.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="../assets/vendors/apexcharts/apexcharts.js"></script>
+<script src="../assets/js/pages/dashboard.js"></script>
+
+
 <script src="../assets/js/main.js"></script>
 </body>
 
 </html>
-
-
-
-
-

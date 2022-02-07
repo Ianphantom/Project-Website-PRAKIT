@@ -298,23 +298,56 @@ class StudentCtl extends BaseController
         $studentModel = new StudentModel();
         $lectureModel = new LectureModel();
         $partnerModel = new KppartnerModel();
+        $alihKredit = new AlihKreditModel();
+
 
         $data_kp = $pengajuanModel->getPengajuanKP(session()->get('loggedUser'));
+        // if($data_kp == 0){
+        //     $data_partner = $partnerModel->getPengajuanKP(session()->get('loggedUser'));
+        //     if($data_partner == 0){
+        //         return view('student/index_null');
+        //     }
+        //     $dataSiswaKP = $partnerModel->where('id_siswa', session()->get('loggedUser'))->first();
+        // }else{
+        //     $dataSiswaKP = $pengajuanModel->where('id_siswa', session()->get('loggedUser'))->first();
+        // }
+
+        
+
         if($data_kp == 0){
             $data_partner = $partnerModel->getPengajuanKP(session()->get('loggedUser'));
             if($data_partner == 0){
-                return view('student/index_null');
+                $isKp = false;
+                $cekAlihKredit = $alihKredit->getAlihKredit(session()->get('loggedUser'));
+                if($cekAlihKredit == 0){
+                    $isAlihKredit = false;
+                }else if($cekAlihKredit > 0 ){
+                    $isAlihKredit = true;
+                }
+            }else{
+                $dataSiswaKP = $partnerModel->where('id_siswa', session()->get('loggedUser'))->first();
+                $isKp = true;
             }
-            $dataSiswaKP = $partnerModel->where('id_siswa', session()->get('loggedUser'))->first();
-        }else{
+        }else if($data_kp > 0){
             $dataSiswaKP = $pengajuanModel->where('id_siswa', session()->get('loggedUser'))->first();
+            $isKp = true;
         }
 
-        $data_pengajuan = $pengajuanModel->where('id_kp', $dataSiswaKP['id_kp'])->first();
-        $data = [
-            'kp' => $data_pengajuan,
-        ];
-        return view('student/pengajuan_kp', $data);
+        if($isKp == false && $isAlihKredit == false){
+            return view('student/index_null');
+        }else if($isKp == true){
+            $data_pengajuan = $pengajuanModel->where('id_kp', $dataSiswaKP['id_kp'])->first();
+            $data = [
+                'kp' => $data_pengajuan,
+            ];
+            return view('student/pengajuan_kp', $data);
+        }else if($isAlihKredit == true){
+            $data_pengajuan = $alihKredit->where('id_siswa', session()->get('loggedUser'))->first();
+            $data = [
+                'kp' => $data_pengajuan,
+            ];
+            return view('student/pengajuan_alihKredit', $data);
+        }
     }
 
     public function downloadPengajuan(){
