@@ -10,6 +10,7 @@ use App\Models\PengajuanModel;
 use App\Models\LogbookModel;
 use App\Models\LaporanModel;
 use App\Models\NilaiModel;
+use App\Models\AlihKreditModel;
 
 class LectureCtl extends BaseController
 {
@@ -40,8 +41,9 @@ class LectureCtl extends BaseController
 
     public function mahasiswakp(){
         $lectureModel = new LectureModel();
+        // $alihKredit = new AlihKreditModel();
         $dataDosen = $lectureModel->where('id_dosen', session()->get('loggedUser'))->first();
-        
+        $data_alih = $lectureModel->getDataNIlaiAlihKredit();
         $data_kp1 = $lectureModel->getDataNilaiPengajuankp(session()->get('loggedUser'));
         $data_kp2 = $lectureModel->getDataNilaiPartnerkp(session()->get('loggedUser'));
 
@@ -49,6 +51,7 @@ class LectureCtl extends BaseController
             'dataDosen' => $dataDosen,
             'data1' => $data_kp1,
             'data2' => $data_kp2,
+            'alihKredit' => $data_alih,
         ];
 
         return view('lecture/all-mahasiswa', $data);

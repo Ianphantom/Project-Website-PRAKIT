@@ -126,4 +126,13 @@ class LectureModel extends Model
         $res = $this->db->query($query);
         return $res->getResult();            
     }
+
+    function getDataNIlaiAlihKredit(){
+        $query = "SELECT *, c.nama as nama_dosen, siswa.nama as nama_siswa FROM `alihkredit` AS a 
+                    INNER JOIN siswa on a.id_siswa=siswa.id_siswa 
+                    INNER JOIN nilai_alihkredit as b on a.id_siswa=b.id_siswa 
+                    INNER JOIN dosen as c on a.id_dosen=c.id_dosen;";
+        $res = $this->db->query($query);
+        return $res->getResult();
+    }
 }

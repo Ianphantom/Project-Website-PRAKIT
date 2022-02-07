@@ -104,6 +104,7 @@
                         <th rowspan="1">Nama</th>
                         <th rowspan="1">NRP</th>
                         <th rowspan="1">Nilai</th>
+                        <th rowspan="1" class="text-center">Alih Kredit</th>
                         <th rowspan="1">Dosen Wali</th>
                     </tr>
                     <?php foreach($data1 as $data){ ?>
@@ -111,6 +112,7 @@
                             <td><?php echo htmlentities($data->nama_siswa) ?></td>
                             <td><?php echo htmlentities($data->nrp) ?></td>
                             <td><?php echo htmlentities($data->nilai) ?></td>
+                            <td class="text-center">-</td>
                             <td><?php echo htmlentities($data->nama_dosen) ?></td>
                         </tr>
                     <?php } ?>
@@ -119,7 +121,17 @@
                             <td><?php echo htmlentities($dataDua->nama_siswa) ?></td>
                             <td><?php echo htmlentities($dataDua->nrp) ?></td>
                             <td><?php echo htmlentities($dataDua->nilai) ?></td>
+                            <td class="text-center">-</td>
                             <td><?php echo htmlentities($dataDua->nama_dosen) ?></td>
+                        </tr>
+                    <?php } ?>
+                    <?php foreach($alihKredit as $dataAlih){ ?>
+                        <tr>
+                            <td><?php echo htmlentities($dataAlih->nama_siswa) ?></td>
+                            <td><?php echo htmlentities($dataAlih->nrp) ?></td>
+                            <td><?php echo htmlentities($dataAlih->nilai) ?></td>
+                            <td class="text-center">&#10004;</td>
+                            <td><?php echo htmlentities($dataAlih->nama_dosen) ?></td>
                         </tr>
                     <?php } ?>
                 </table>
