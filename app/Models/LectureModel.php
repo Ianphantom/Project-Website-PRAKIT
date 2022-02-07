@@ -62,6 +62,16 @@ class LectureModel extends Model
         return $res;
     }
 
+    function cekPermissionPengajuanAlihKredit($id_dosen, $id_siswa, $id_nilai){
+        $query = "SELECT *, c.nama as nama_dosen, siswa.nama as nama_siswa FROM `alihkredit` AS a 
+                    INNER JOIN siswa on a.id_siswa=siswa.id_siswa 
+                    INNER JOIN nilai_alihkredit as b on a.id_siswa=b.id_siswa 
+                    INNER JOIN dosen as c on a.id_dosen=c.id_dosen
+                    where a.id_dosen='".$id_dosen."' AND siswa.id_siswa='".$id_siswa."' AND b.id_nilai='".$id_nilai."';";
+        $res = $this->db->query($query);
+        return $res;
+    }
+
     function cekPermissionPartnerkp($id_dosen, $id_siswa, $id_nilai){
         $query = "SELECT a.*, siswa.*, b.status, b.nama_perusahaan, d.nama as nama_dosen, c.nilai, siswa.nama as nama_siswa FROM `partnerkp` AS a 
                     INNER JOIN siswa on a.id_siswa=siswa.id_siswa 

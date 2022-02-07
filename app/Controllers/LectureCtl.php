@@ -10,6 +10,7 @@ use App\Models\PengajuanModel;
 use App\Models\LogbookModel;
 use App\Models\LaporanModel;
 use App\Models\NilaiModel;
+use App\Models\NilaiAlihKreditModel;
 use App\Models\AlihKreditModel;
 
 class LectureCtl extends BaseController
@@ -62,6 +63,7 @@ class LectureCtl extends BaseController
     public function penilaianMahasiswa(){
         $lectureModel = new LectureModel();
         $dataDosen = $lectureModel->where('id_dosen', session()->get('loggedUser'))->first();
+        $data_alih = $lectureModel->getDataNIlaiAlihKredit();
         
         $data_kp1 = $lectureModel->getDataNilaiPengajuankpBimbingan(session()->get('loggedUser'));
         $data_kp2 = $lectureModel->getDataNilaiPartnerkpBimbingan(session()->get('loggedUser'));
@@ -70,6 +72,7 @@ class LectureCtl extends BaseController
             'dataDosen' => $dataDosen,
             'data1' => $data_kp1,
             'data2' => $data_kp2,
+            'data3' => $data_alih,
         ];
         return view('lecture/penilaian-mhs', $data);
     }
@@ -81,6 +84,27 @@ class LectureCtl extends BaseController
         $cekPermissionPengajuanKP = $lectureModel->cekPermissionPengajuankp(session()->get('loggedUser'),$seg1,$seg2);
         $cekPermissionPartnerKP = $lectureModel->cekPermissionPartnerkp(session()->get('loggedUser'),$seg1,$seg2);
         if($cekPermissionPengajuanKP->getNumRows() == 0 && $cekPermissionPartnerKP->getNumRows() == 0 ){
+            return view('lecture/updatenilai-forbidden');
+        }
+
+        $dataSiswa = $studentModel->where('id_siswa', $seg1)->first();
+        $dataNilai = $nilaiModel->where('id_nilai', $seg2)->first();
+        session()->set('id_nilai', $seg2);
+        $data = [
+            'userid'    => $seg1,
+            'id_nilai'     => $seg2,
+            'dataSiswa' => $dataSiswa,
+            'dataNilai' => $dataNilai,
+        ];
+        return view('lecture/updatenilai', $data);
+    }
+
+    public function updateNilaikp($seg1 = false, $seg2 = false){
+        $studentModel = new StudentModel();
+        $nilaiModel = new NilaiAlihKreditModel();
+        $lectureModel = new lectureModel();
+        $cekPermissionPengajuanKP = $lectureModel->cekPermissionPengajuanAlihKredit(session()->get('loggedUser'),$seg1,$seg2);
+        if($cekPermissionPengajuanKP->getNumRows() == 0){
             return view('lecture/updatenilai-forbidden');
         }
 

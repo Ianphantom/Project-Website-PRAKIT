@@ -104,14 +104,16 @@
                     <th rowspan="1">Nama</th>
                     <th rowspan="1">NRP</th>
                     <th rowspan="1">Nilai</th>
-                    <th rowspan="1">Aksi</th>
+                    <th rowspan="1" class="text-center">Alih Kredit</th>
+                    <th rowspan="1" class="text-center">Aksi</th>
                 </tr>
                 <?php foreach($data1 as $data){ ?>
                     <tr>
                         <td><?php echo htmlentities($data->nama_siswa) ?></td>
                         <td><?php echo htmlentities($data->nrp) ?></td>
                         <td><?php echo htmlentities($data->nilai) ?></td>
-                        <td>
+                        <td class="text-center">-</td>
+                        <td class="text-center">
                             <a href="<?php echo base_url('lecture/updatenilai/'.$data->id_siswa.'/'.$data->id_nilai); ?>" class="btn btn-primary btn-md shadow-md">Ubah Nilai</a>
                         </td>
                     </tr>
@@ -121,8 +123,20 @@
                         <td><?php echo htmlentities($dataDua->nama_siswa) ?></td>
                         <td><?php echo htmlentities($dataDua->nrp) ?></td>
                         <td><?php echo htmlentities($dataDua->nilai) ?></td>
-                        <td>
+                        <td class="text-center">-</td>
+                        <td class="text-center">
                             <a href="<?php echo base_url('lecture/updatenilai/'.$dataDua->id_siswa.'/'.$dataDua->id_nilai); ?>" class="btn btn-primary btn-md shadow-md">Ubah Nilai</a>
+                        </td>
+                    </tr>
+                <?php } ?>
+                <?php foreach($data3 as $dataTiga){ ?>
+                    <tr>
+                        <td><?php echo htmlentities($dataTiga->nama_siswa) ?></td>
+                        <td><?php echo htmlentities($dataTiga->nrp) ?></td>
+                        <td><?php echo htmlentities($dataTiga->nilai) ?></td>
+                        <td class="text-center">&#10004;</td>
+                        <td class="text-center">
+                            <a href="<?php echo base_url('lecture/updatenilaikp/'.$dataTiga->id_siswa.'/'.$dataTiga->id_nilai); ?>" class="btn btn-primary btn-md shadow-md">Ubah Nilai</a>
                         </td>
                     </tr>
                 <?php } ?>
