@@ -8,7 +8,7 @@ class NilaiAlihKreditModel extends Model
 {
     protected $DBGroup          = 'default';
     protected $table            = 'nilai_alihkredit';
-    protected $primaryKey       = 'id';
+    protected $primaryKey       = 'id_nilai';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
     protected $returnType       = 'array';

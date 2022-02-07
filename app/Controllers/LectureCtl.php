@@ -117,7 +117,7 @@ class LectureCtl extends BaseController
             'dataSiswa' => $dataSiswa,
             'dataNilai' => $dataNilai,
         ];
-        return view('lecture/updatenilai', $data);
+        return view('lecture/updatenilaialihkredit', $data);
     }
 
     public function updatingNilai(){
@@ -138,6 +138,42 @@ class LectureCtl extends BaseController
             'nilai'  => $this->request->getVar('nilai'),
             'berkas_nilai' => $fileName,
         ];
+        $nilaiModel->update(session()->get('id_nilai'), $inputNilai1);
+        $dataBerkas->move('assets/nilaikp/', $fileName);
+        $lectureModel = new LectureModel();
+        $dataDosen = $lectureModel->where('id_dosen', session()->get('loggedUser'))->first();
+        
+        $data_kp1 = $lectureModel->getDataNilaiPengajuankpBimbingan(session()->get('loggedUser'));
+        $data_kp2 = $lectureModel->getDataNilaiPartnerkpBimbingan(session()->get('loggedUser'));
+
+        $data = [
+            'dataDosen' => $dataDosen,
+            'data1' => $data_kp1,
+            'data2' => $data_kp2,
+        ];
+        session()->remove('id_nilai');
+        return redirect()->to(base_url('lecture/penilaian-mhs'))->with('success', 'Mark Updated');
+    }
+
+    public function updatingNilaiAlihKredit(){
+        $nilaiModel = new NilaiAlihKreditModel();
+
+        helper(['form']);
+        $rules = [
+            'nilai' => 'required|numeric',
+            'file' => 'uploaded[file]',
+        ];
+
+        helper('date');
+        helper('text');
+        $dataBerkas = $this->request->getFile('file');
+		$fileName = session()->get('loggedUser'). '_' . now('Asia/Kolkata') .  '_' .  strtolower($this->request->getVar('namaBerkas')) . '_' . $dataBerkas->getRandomName();
+
+        $inputNilai1 = [
+            'nilai'  => $this->request->getVar('nilai'),
+            'berkas_nilai' => $fileName,
+        ];
+        // echo session()->get('id_nilai');
         $nilaiModel->update(session()->get('id_nilai'), $inputNilai1);
         $dataBerkas->move('assets/nilaikp/', $fileName);
         $lectureModel = new LectureModel();
